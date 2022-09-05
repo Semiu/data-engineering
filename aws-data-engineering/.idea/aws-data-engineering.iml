@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/.aws/Scripts" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/.aws" />
+      <excludeFolder url="file://$MODULE_DIR$/venv" />
+    </content>
+    <content url="file://C:/spark-3.2.2-bin-hadoop3.2/bin" />
+    <orderEntry type="jdk" jdkName="Python 3.10 virtualenv at C:\Users\Admin\Documents\Intro-to-Python\aws-data-engineering\.aws" jdkType="Python SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
