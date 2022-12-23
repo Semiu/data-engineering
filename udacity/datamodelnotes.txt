@@ -1,0 +1,21 @@
+Data model: an abstraction that organizes data elements and how they relate to each other.Conceptual (entities mapping) to
+logical (column definition, relationship for referential integrity) and physical (data definition and manipulation 
+languages)
+
+Advantages of using relational db
+ease of use - SQL
+ability to do JOINS, aggregations and analytics
+secondary indexes - searching data on columns that are not the primary keys (though require additional resources)
+queries flexibility
+ACID transactions
+
+When not to use relational db
+* large amount of data
+* to store different data type format
+* can only scale vertically - not horizontally because they are not distributed
+
+
+
+Blogging topics:
+a. Data Modeling - from conceptual to logical, and finally, physical.
+b. Understanding Database's ACID transactions
