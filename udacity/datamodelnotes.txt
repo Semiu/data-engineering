@@ -14,7 +14,26 @@ When not to use relational db
 * to store different data type format
 * can only scale vertically - not horizontally because they are not distributed
 
+Non-relational DB
+NoSQL db - simpler design, simpler horizontal scaling. Different data structures that make some operatins faster than 
+what is obtainable in relational db.
+Apache Cassandra is partition row store
+MongoDB is Document store - asides from the key-value for data lookup, it offers API for query language
+DynamiDb is Key-value store
+Apache HBase is wide column store. Uses row and columns but, unlike in RDB, it allows different row format in the same 
+table
+Neo4J - graph database where entities are represented in nodes and the relationship in edges
 
+Apache Cassandra
+It provides scalability and high availability, proven fault tolerance, ths suitable for mission-critical data. It is CQL.
+Cassandra Query Language
+
+Keyspace - collection of tables
+Table - a group of partitions
+Rows - a single item
+Partition - fundamental unit of access, collection of rows and how data is distributed
+Primary key - made up of the partition key and clustering columns
+Columns - clustering and data, labelled element
 
 Blogging topics:
 a. Data Modeling - from conceptual to logical, and finally, physical.
