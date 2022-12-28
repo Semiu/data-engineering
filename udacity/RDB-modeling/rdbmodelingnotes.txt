@@ -1,0 +1,34 @@
+Database is the physical arrangemement of data. Access to database is always provided by database management system - computer software
+that allowsusers to interact with the databases and provide access to the data.
+
+Information in a relational database is represented at the logical level in exactly one way, that is, by values in tables.
+This is the rule 1 (information rule) of the Codd's rules. This is the rule expected to be achieved by data modeling.
+
+Importance of relational database modeling are (a) helping in standardization of data model (transforming data into rows
+and columns for seamless query using SQL), (b) flexivility in adding and altering tables, (c) data integrity (ensuring
+data inputted meets the quality checks and types), (d) SQL - helps to access the data in a standard predefined language, 
+(e) Simplicity - data stored in a tabular format, (f) intuitive organization - see spreasheet data organization.
+
+OLAP: Read heavy, for complex analytics and ad hoc queries for aggregations.
+
+OLTP: Support read, insert, update and delete. Little aggregations if any.
+
+Normalization - to reduce data redundancy (copies of data) and increase data integrity (response from the database must
+be correct). This is the process of structuring relational database in accordance with series of normal forms in order to
+reduce data redundancy. Normalization achieves avoidance of unranted insertions, redunction of refactoring, informative 
+relational model, neutral database. This is a step-by-step process.
+Though there are up to 6 NF, most DB modeling strives to achieve 3 NF.
+
+First Normal form (1NF) - atomic values in decoupled tables addressing specific relation instead of having everything in a
+giant table.
+Second Normal form (2NF) - Achieve 1NF. All columns rely on PK
+third Normal form (3NF) - Achieve 2NF. No transitive dependencies - meaning when a retrieving information of a column
+depends on two other columns in a way that the output might not even be unique. Break into tables in a way that avoids
+having duplicate data. We want A->C without passing through B.
+
+Denormalization - for read heavy workloads to increase performance. There would be duplicates of the data because they are
+focussed on the queries that would be run.
+
+Facts/Dimension tables
+
+Different schema models
