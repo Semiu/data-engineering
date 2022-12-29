@@ -27,7 +27,14 @@ depends on two other columns in a way that the output might not even be unique. 
 having duplicate data. We want A->C without passing through B.
 
 Denormalization - for read heavy workloads to increase performance. There would be duplicates of the data because they are
-focussed on the queries that would be run.
+focussed on the queries that would be run. This is a process of improving the read performance of a database at the
+expense of some write performance by adding redundant copies of data.
+For examples, while breaking down tables into smaller ones to use JOIN allows flexibility and data integrity, but it
+ is extremely slow.
+
+Denormalization follows normalization. Meaning tables are denormalized after they have been normalized. Reads (SELECT) 
+will be fasterand writes (insert, update, delete) will be slower. In other words, denormalization is all about performance.
+Duplicate data is allows for denormalized tables
 
 Facts/Dimension tables
 
