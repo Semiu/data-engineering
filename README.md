@@ -1,3 +1,3 @@
 # Introduction to Data Engineering
 
-This repo documents by different learning explorations of the data engineering specialty. 
+This repo documents my different learning explorations of the data engineering specialty. 
