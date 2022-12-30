@@ -34,8 +34,30 @@ For examples, while breaking down tables into smaller ones to use JOIN allows fl
 
 Denormalization follows normalization. Meaning tables are denormalized after they have been normalized. Reads (SELECT) 
 will be fasterand writes (insert, update, delete) will be slower. In other words, denormalization is all about performance.
-Duplicate data is allows for denormalized tables
+Duplicate data is allows for denormalized tables.Denormalization is all about queries. When needing to query with JOIN 
+on many tables, there would be less performance. It is the go-to choice when the workload is heavily READ.
 
-Facts/Dimension tables
+With denormalization, we want to examine the queries to be run and find a way of reducing the number of JOIN to be involved.
+We want to get the information needed from minimum number of tables possible. Denormalizing normalized tables may lead to
+duplicate data. But that is a reasonable tradeoffs.
 
-Different schema models
+Denormalization vs. Normalization - Normalization is about increasing data integrity by reducing the number of copies of
+data. Data updates (WRITE operations - INSERT, UPDATE, DELETE) would be done in as few places as possible. 
+Denormalization is about increasing the performance by reducing the number of JOINS between tables. This would affect 
+data integrity anyway.
+
+Facts/Dimension tables - work together for an organized data model. These are created differently in the database. They
+are conceptual, and extremely important. They help in understanding Star and Snowflake schemas. Facts consist of metrics,
+measurements and facts. Dimensions are updated, while facts take key (FK) referencing the dimension table PK. They contain
+all other info nor included in the fact table.
+
+Different schema models - The two popular data mart schema for data wearehousing are (i) star and (ii) snowflake.
+Star schema is the simplest - consists of one or more fact tables, referencing number of dimension tables. Star schemas
+are denormalized, simplifies queries, fast aggregations. That comes with the drawbacks of denormalization, data integrity.
+
+Snowflake schema - logical arrangement of tables in a multidimensional database represented by centralized fact tables,
+connected to multiple dimensions. This is a result of elaborated dimensions. More normalized than star schema but only
+ in 1NF or 2NF.
+
+Snowflake vs Star - Star schema is a special and simplified case of snowflake. It does not allow one to many relationships
+while snowflake schema does. 
