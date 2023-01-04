@@ -1,0 +1,36 @@
+Basics of NoSQL (Non-relational) database design:
+Good when there is need for high availability in the data - system always up and no downtime. There is large amount of
+data. Needs linear scalability, i.e. adding more nodes to the syste, to improve the performance linearly. Low latency, meaning
+there is a shorter delay before the data is transfered once the instruction for the transfer has been received.
+And lastly, where there is need for fast reads and write.
+
+Apache Cassandra is (a) open-source, (b) masterless architecture, (c) high availability, (d) linearly scalable. Created to
+meet big data challenges that RDBs are failing to solve
+(Documentation: https://docs.datastax.com/en/archived/cassandra/3.0/cassandra/dml/dmlIntro.html)
+(https://docs.datastax.com/en/archived/cassandra/3.0/cassandra/architecture/archTOC.html)
+(https://www.tutorialspoint.com/cassandra/cassandra_architecture.htm)
+(https://docs.datastax.com/en/dseplanning/docs/capacityPlanning.html)
+
+Though deployment strategies can be affected by the size of the data and the data model, they do not have serious 
+connections. 
+
+The CAP theorem: It is impossible for a distributed data store to simulatenously provide more than two out of the three 
+guarantees of consistency, availability and partition tolerance.
+
+Consistency - Every read from the database gets latest and correct pience of data or an error. 
+Availability - Every request is received and a response is given - without a guarantee that the data is the latest update.
+Partition tolerance - The system continues to work regardless of losing network connectivity between nodes.
+
+Apache cassandra chooses to be highly available at the cost of consistency. But it makes it up with eventual consistency.
+
+(Discussion about ACID vs CAP: https://www.voltactivedata.com/blog/2015/10/acid-vs-cap/)
+
+Denormalization in Apache Cassandra is critical. It is a must. Modeling must be done by thinking firstly about the 
+queries to be performed. There are no JOINS in Apache Cassandra. One table per query is the great strategy. Apache 
+Cassandra is optimized for fast writes. But for fast reads, it has to be planned with good data modeling.
+
+Primary keys
+
+Clustering columns
+
+WHERE clause
