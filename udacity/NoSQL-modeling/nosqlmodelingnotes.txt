@@ -29,7 +29,15 @@ Denormalization in Apache Cassandra is critical. It is a must. Modeling must be 
 queries to be performed. There are no JOINS in Apache Cassandra. One table per query is the great strategy. Apache 
 Cassandra is optimized for fast writes. But for fast reads, it has to be planned with good data modeling.
 
-Primary keys
+CQL -Cassandra Query Language, it mimics SQL, but it has no JOINS, GROUP BY or sub queries.
+
+Primary keys - How each row can be uniquely identified and the data distributed across the nodes in our system. The first
+element of the primary key is the partition key, which will determine the distribution. In other words, where the "WHERE"
+clause is. The primary key is made up of either just the partition key or with the addition of the clustering columns.
+Primary keys must be unique to each row
+
+The partition key row value will be hashed (turned into a number) and stored on the node in the system holding the range
+of values.
 
 Clustering columns
 
