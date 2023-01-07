@@ -39,6 +39,13 @@ Primary keys must be unique to each row
 The partition key row value will be hashed (turned into a number) and stored on the node in the system holding the range
 of values.
 
-Clustering columns
+Clustering columns - Note that the primary key is made up of just the partition key (the filtering column of the WHERE 
+clause) or the clustering columns. The clustering colum determines the sort order within a partition (ascending). More 
+than one clustering column can be added. Use the clustering columns ONLY in order, when used in the SELECT statement
 
-WHERE clause
+WHERE clause - Data modeling in Cassandara is query focused. Therefore, the focus needs to be on the WHERE clause. 
+The partition key must be included in the query and the clustering columns in the order they appear in the primary key.
+The WHERE clause must be included to execute queries for low latency and high performance. Recommended that one partition at a time for performance
+implications. SELECT * from a table is allowed if ALOW FILTERING configuration, but highly discouraged.
+Also, the columns in the WHERE clause should be arranged in the order they are created in the data model. Any column can
+only be added after all these have been used in the WHERE clause of the query.
