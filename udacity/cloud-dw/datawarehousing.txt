@@ -1,0 +1,1 @@
+Data warehouse is a system which includes processes amd technologies and data representations that enables us to support analytical processes.
