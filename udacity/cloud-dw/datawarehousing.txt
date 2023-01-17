@@ -1,1 +1,43 @@
+Data Warehouse
 Data warehouse is a system which includes processes amd technologies and data representations that enables us to support analytical processes.
+A data warehouse is a copy of transaction data specifically structured for query and analysis (Kimball). A data warehouse
+is a subject-oriented, integrated, nonvolatile and time-variant collection of data in support of management's decision (Inmon).
+A data warehouse retrieves and consolidates data periodically from source systems into a dimensional or normalized data store.
+It is usually updated in batches, not every time a transaction happens in the source system.
+
+Business needs for data analytics
+When there is different sources of data for organizational needs. Analysing these data for BI needs, visualization, analytics,
+Data warehouses are solutions built to support organization's data analytics needs.
+Take for example, there is a retailer data infrastructure need to support (a) customers' ability to purchase goods, (b) delivery
+staff fulfilling orders and updating an inventory, (c) inventory staff stocking, retrieving and re-ordering goods, and (d)
+customers' needs to find goods and make others.
+
+These supports integrate the scope of both OLTP and OLAP. Therefore, specifically designed databases might be sufficient to
+cater for the transaction processing needs, however, a data warehouse which aggregates all the data in the databases must be
+designed to take care of the analytical needs.
+
+
+How the needs translate to data warehouses - Data warehouse design
+- Dimensional modeling
+Though 3NF provides data integrity advantage, it has lots of expensive JOINS that are hard to explain to business users.
+Star Schema as a dimensional model, for example, is easy to understand and provides fast analytical query performance.
+Fact tables columns record event in quantifiable metrics. Dimensions record the context of the events like the store where
+an item is purchased.  
+
+- ETL processes for data warehousing (Extract from the data sources, Transform (can include cleansing, generating metadata to dimensional modeling, and Load into DW)
+
+Data warehouse architecture
+- Kimball's architecture and its components
+According to Kimball's Bus Architecture, data is kept in a common dimension data model shared across different departments. 
+It does not allow for individual department specific data modeling requirements. The same data dimension is used by different
+business processes.
+
+- Processes of each data warehouse component
+
+- Storage architecture components for optimization
+
+
+OLAP cubes
+- OLAP cubes as a tool for dimensional analysis
+
+- Operations that can be performed on O
