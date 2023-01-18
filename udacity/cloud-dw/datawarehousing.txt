@@ -39,5 +39,18 @@ business processes.
 
 OLAP cubes
 - OLAP cubes as a tool for dimensional analysis
+Once the facts and dimension tables are completed. Then, OLAP cubes will be used for analytical processing.
+OLAP cubes are queries that return multiple dimensions from the fact dimensional datasets. It is easy to communicate 
+
+Fact
+Metric
+Month or period. By combining more than one dimension, you can perform Roll up (grouping data by one dimension - aggregates 
+or combines values and reduces number of rows or columns). 
+For example,
+sum up the sales of each city by country.
+or Drill down (decomposes values and increases number of rows or columns) 
+slice and dice (produces smaller sub-cube - same dimensions, but restricting values of some dimensions) operations.
+The OLAP slice operation reduces N dimensions to N-1 by restricting one dimension to a single value.
+
 
 - Operations that can be performed on O

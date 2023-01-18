@@ -1,0 +1,11 @@
+Data Lakes
+
+Data lakes stores all the raw data, as uploaded fron the different sources.
+Stores all data structures. Cost effective but diffcult to analyze.
+Requires an up-to-date data catalog
+The data catalog is a source of truth that compensates for the lack of structure of the data. It records answers to
+questions like What is the source of the data, where it is beig used, who is the owner of the data, and how often it is
+updated. Good practice to have one in terms of data governance - it helps in managingg the availability, confidentiality,
+and integrity.
+Data catalog ensures reproducibility and avoids data lakes becoming data swamps. Serves as source of information for reliability,
+autonomy, scalability and speed.
