@@ -51,6 +51,3 @@ sum up the sales of each city by country.
 or Drill down (decomposes values and increases number of rows or columns) 
 slice and dice (produces smaller sub-cube - same dimensions, but restricting values of some dimensions) operations.
 The OLAP slice operation reduces N dimensions to N-1 by restricting one dimension to a single value.
-
-
-- Operations that can be performed on O
