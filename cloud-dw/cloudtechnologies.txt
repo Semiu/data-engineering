@@ -6,3 +6,53 @@ ETL handles limited, well-defined use cases well.
 ELT - Loading before transformation, in Cloud environment. The data is loaded directly to the target. Then,
 transformation is applied on demand. This happens on the destination server. This gives the opportunities 
 of scaling, flexibility, cost shifting, better performance for large datasets, and more flexibile for NoSQL datasets.
+
+- Building Data Warehouses with AWS RedShifts
+AWS services can be accessed through (a) AWS Management console - the web interface, 
+(b) Command Line Interface,
+(c) Software Development Kits
+
+ - Creating IAM Roles
+All AWS services require identity and access management (IAM) policies, roles and their associated permissions.
+
+Create an IAM user role that has permission to use the RedShift service on AWS.
+This role will later be attached to your RedShift cluster to enable the cluster load data from Amazon S3 buckets
+	* Once you have signed into the AWS management console, navigate to the IAM service dashboard.
+	* In the left navigation pane, choose Roles.
+	* Choose Create role.
+	* In the AWS Service group as the trusted entity, and choose Redshift service.
+	* Under Select your use case, choose Redshift - Customizable, and then Next: Permissions.
+	* On the Attach permissions policies page, search for and select the AmazonS3ReadOnlyAccess policy, and then click on the Next: Tags button.
+	* Tags are optional. Click on the Next: Review button.
+	* For Role name, enter myRedshiftRole, and then choose Create Role.
+	* You will see a success message when the new role will be created.
+
+ -  Creating Security Groups - the security group to authorize access to the RedShift cluster. It would serve as a firewall rules of the RedShift cluster to control the 
+inbound and outbound rules
+	* Navigate to EC2 service
+	* Under Network and Security in the left navigation pane, select Security Groups. Click the Create Security Group button to launch a wizard.
+	* In the Create security group wizard, enter the basic details.
+	* In the Inbound rules section, click on Add Rule and enter the following values (Important: Using 0.0.0.0/0 is not recommended for anything other than demonstration 
+	purposes because it allows access from any computer on the internet. In a real environment, you would create inbound rules based on your own network settings.
+	* Outbound rules allow traffic to anywhere by default.
+	* Click on the Create security group button at the bottom. You will see a success message
+
+ - Creating IAM Users - After creating the IAM role with the permission assigned and the security group created, the next is creating the user.
+	* From the IAM console, in the left navigation pane, choose Users, and click on the Add User button. It will launch a new wizard.
+	* Enter a name for your user , say airflow_redshift_user, and choose Programmatic access. Then click on the Next: Permissions button.
+	* Choose Attach existing policies directly option.
+	 - Search for redshift and select AmazonRedshiftFullAccess.
+	 - Then, search for S3 and select AmazonS3ReadOnlyAccess.
+	- After selecting both policies, choose Next: Tags. Skip this page and choose Next: Review.
+	* Review your choices and finally click on the Create user button.
+
+Save your credentials!
+This is the only time you can view or download these credentials on AWS. Choose Download .csv to download these credentials and 
+then save this file to a safe location. You'll need to copy and paste this Access key ID and Secret access key in the next step.
+
+
+Launching Redshift Clusters
+
+Deleting Redshift Clusters
+
+Creating S3 buckets
