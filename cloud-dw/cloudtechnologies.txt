@@ -52,6 +52,12 @@ then save this file to a safe location. You'll need to copy and paste this Acces
 
 
 Launching Redshift Clusters
+- Sign in to the AWS Management Console and open the Amazon Redshift console
+- On the Amazon Redshift Dashboard, choose Create cluster. It will launch the Create cluster wizard.
+- Create cluster subnet.
+- Review your Cluster configuration and click on the Create cluster button at the bottom. It will take a few minutes to finish and show you a Complete status
+- Click on the Clusters menu item from the left navigation pane, and look at the cluster that you just launched. 
+  Make sure that the Status is Available before you try to connect to the database later. You can expect this to take 5-10 minutes.
 
 Deleting Redshift Clusters
 
