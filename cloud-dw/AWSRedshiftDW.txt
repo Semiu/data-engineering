@@ -1,9 +1,10 @@
-Amazon Redshift Data Warehouse Solution
-	Data warehousing requires a database. Amazon RDS is a cloud-based data warehousing solution that can be managed using SQL tools. 
-
+Amazon Redshift Data Warehouse Solution: Data warehousing requires a database. Amazon RDS is a cloud-based data warehousing solution that can be managed using SQL tools. 
 	- Redshift Architecture: Redshift clusters - How they are organized into slices of compute
 Redshift is a cluster machine. It has one leader node and 1 to n compute nodes. The leader node interacts with the outside world. But it cordinates the works of the compute nodes.
-	
+Each node is an EC2 instance. Therefore, the total number of number of nodes in a Redshift cluster is the number of AWS Ec2 instances used in the cluster.
+Each slice in the cluster has dedicated storage and memory, with at least 1 CPU.
+The total number of slices in a cluster is the unit of parallelism (that is, the number of partitions that the job will result in) and is the sum of all the slices on the cluster. 	
+
 	- How is RedShift different from Relational DB - Row vs. Column
 Redshift is a column-oriented RDBMS. It means: it is best suited for OLAP workloads. 
 In traditional RDBMS, multiple queries are executed in parallel. Each query on a single CPU. This is suitable for OLTP applications.
@@ -11,12 +12,17 @@ For data warehousing solution which deals with massive data like Amazon Redshift
 in parallel - on multiple machines. Table is partitioned into small partitions and distributed into different CPUs.
 
 
-	- 
-
 ETL in Amazon Redshift
-	- SQL to SQL ETL in AWS
-	- S3 Staging
-	- Ingesting at Scale - Prefix and Manifest
+	- SQL to SQL ETL in AWS Redshift
+When copying the result, for example, of a star schema (which was a result of transforming a 3NF tables), into another database server, such as Redshift, then the INSERT 
+row statement would be slow. Use the COPY command instead.
+Solving SQL to SQL ETL starts with having an ETL server in between the source database and the destination data warehouse.
+An ETL server runs a SELECT query on the source DB server. The results are stored in CSV files. Then, INSERT/COPY of the result to the destination DB server.
+Amazon EC2 can be used as an ETL server. Then, you can have data copied from AWS as csv files to s3 buckets. And, then another program to copy it from the s3 bucket to Redshift.
+
+The S3 Staging can temporarily store the data copied from the source before they are transitioned/copied to the destination server. 
+Ingesting files in parallel to scale - common prefix and Manifest file. Files can be compressed and same AWS region should be used. Also, a table can be split to multiple files
+before ingestion so that each Redshift slice will act as a separate worker and will use ingest the split of a file in parallel. So, the process will complete much faster.
 
 Optimizing Redshift Table Design
 	- Distribution Strategies
