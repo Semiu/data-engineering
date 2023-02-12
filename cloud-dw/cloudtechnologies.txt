@@ -1,11 +1,11 @@
 ETL - Loading after transformation.
 This is the traditional approach in data warehousing because the data technologies are mostly on-premises. Data are usually extracted, then
-transformed in the transformation engine in an intermediate server. Then, the data loaded to the target.
+transformed in the transformation engine in an intermediate server. Then, the data is loaded to the target.
 ETL handles limited, well-defined use cases well.
 
-ELT - Loading before transformation, in Cloud environment. The data is loaded directly to the target. Then,
-transformation is applied on demand. This happens on the destination server. This gives the opportunities 
-of scaling, flexibility, cost shifting, better performance for large datasets, and more flexibile for NoSQL datasets.
+ELT - Loading before transformation in Cloud environment. The data is loaded directly to the target. Then,
+transformation is applied on demand. This happens on the destination server. 
+This gives scaling, flexibility, cost-shifting opportunities better performance for large datasets, and more flexibility for NoSQL datasets.
 
 - Building Data Warehouses with AWS RedShifts
 AWS services can be accessed through (a) AWS Management console - the web interface, 

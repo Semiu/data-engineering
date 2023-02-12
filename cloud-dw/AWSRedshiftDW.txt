@@ -1,0 +1,24 @@
+Amazon Redshift Data Warehouse Solution
+	Data warehousing requires a database. Amazon RDS is a cloud-based data warehousing solution that can be managed using SQL tools. 
+
+	- Redshift Architecture: Redshift clusters - How they are organized into slices of compute
+Redshift is a cluster machine. It has one leader node and 1 to n compute nodes. The leader node interacts with the outside world. But it cordinates the works of the compute nodes.
+	
+	- How is RedShift different from Relational DB - Row vs. Column
+Redshift is a column-oriented RDBMS. It means: it is best suited for OLAP workloads. 
+In traditional RDBMS, multiple queries are executed in parallel. Each query on a single CPU. This is suitable for OLTP applications.
+For data warehousing solution which deals with massive data like Amazon Redshift. These are MPP - massively parallel processing. They execute one query on multiple CPUs 
+in parallel - on multiple machines. Table is partitioned into small partitions and distributed into different CPUs.
+
+
+	- 
+
+ETL in Amazon Redshift
+	- SQL to SQL ETL in AWS
+	- S3 Staging
+	- Ingesting at Scale - Prefix and Manifest
+
+Optimizing Redshift Table Design
+	- Distribution Strategies
+	- Distribution Keys
+	- Sorting Keys
