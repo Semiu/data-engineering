@@ -25,6 +25,25 @@ Ingesting files in parallel to scale - common prefix and Manifest file. Files ca
 before ingestion so that each Redshift slice will act as a separate worker and will use ingest the split of a file in parallel. So, the process will complete much faster.
 
 Optimizing Redshift Table Design
+Optimizing how a table is partitioned up to many pieces to be distributed across slices on different machines
 	- Distribution Strategies
-	- Distribution Keys
-	- Sorting Keys
+		* Distribution Styles: EVEN distribution, ALL distribution, AUTO distribution, KEY distribution
+	
+	EVEN distribution: If there is a table with a primary key and an FK referencing a dimension. The Load compute evenly distributes (for example, 1000 rows would be evenly
+	distributed to 250 per slice in a 4 slice compute). However, to join 2 tables which are distributed using EVEN strategy would be slow because the record would need to be
+	shuffled before being put together for the JOIN result. For example, given key (say key=2532) of table 1 will not be on the same slice as the corresponding record in 
+	table 2, so record will be copied (shuffled) between slices on different nodes, which results in slow performance.
+
+	ALL distribution: This is is mostly for dimension tables. It is also known as BROADCASTING by replicating a table on all slices. Small tables could be replicated on all
+	slices to speed up JOINS.
+	
+	AUTO distribution: This leaves the decision to RedShift. This is better for small tables. It chooses the small tables better suited for broadcasting. But the large tables
+	are distributed using EVEN strategy.
+
+	KEY distribution: Rows having similar values (FK value) are placed in the same slice. The groups are made on partitions. Tables are created with the `distkey`, `sortkey`
+	on the main table and both the `distkey`, `sortkey` are used as PK on the table part  
+
+		* Sorting Keys
+	Define a column as a sort key. When this is done, rows are sorted before distribution to slices when the data is loaded.
+
+	Distribution and sort keys have generally been proven as a performance-improving strategy for query
