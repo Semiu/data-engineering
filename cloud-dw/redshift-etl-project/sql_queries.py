@@ -1,3 +1,4 @@
+# Import the needed library
 import configparser
 
 # CONFIG - Read the configuration file
