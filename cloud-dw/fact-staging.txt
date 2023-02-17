@@ -1,0 +1,64 @@
+# Fact table
+# songplay_table
+songplay_table_create = ("""
+CREATE TABLE "songplay_table" (
+    "songplay_id" IDENTITY(0,1) INTEGER NOT NULL,
+    "start_time" TIME NOT NULL, **extract from timestamp in staging event table**
+    "user_id" INTEGER NOT NULL, **userId from staging event table**
+    "level"  VARCHAR(5) NOT NULL, **level from staging event table**
+    "song_id" VARCHAR(25) NOT NULL, **song_id from staging song table**
+    "artist_id" VARCHAR(25) NOT NULL, **artist_id from staging song table**
+    "session_id" INTEGER NOT NULL, **sessionid from staging event table**
+    "location" VARCHAR(25) NOT NULL, **location from staging event table**
+    "user_agent" VARCHAR(100) NOT NULL **userAgent from staging event table**
+);
+""")
+
+# Dimension tables
+# user table
+user_table_create = ("""
+CREATE TABLE "user_table" (
+    "usertable_id" IDENTITY(0,1) INTEGER NOT NULL,
+    "user_id" INTEGER NOT NULL, **userId from staging event table**
+    "first_name" VARCHAR(19) NOT NULL, **firstName from staging event table**
+    "last_name" VARCHAR(15) NOT NULL, **lastName from staging event table**
+    "gender" VARCHAR(5) NOT NULL, **gender from staging event table**
+    "level" VARCHAR(5) NOT NULL **level from staging event table**
+);
+""")
+
+# song_table
+song_table_create = ("""
+CREATE TABLE "song_table" (
+    "song_id" VARCHAR(25) NOT NULL, **song_id from staging song table**
+    "title" VARCHAR(25) NOT NULL, **title from staging song table**
+    "artist_id" VARCHAR(25) NOT NULL, **artist_id from staging song table**
+    "year"  INTEGER NOT NULL, **year from staging song table**
+    "duration" DECIMAL (7,5) **duration from staging song table**
+);
+""")
+
+# artist_table
+artist_table_create = ("""
+CREATE TABLE "artist_table" (
+    "artist_id" VARCHAR(25) NOT NULL, **artist_id from staging song table**
+    "artist_name" VARCHAR(25) NOT NULL, **artist_name from staging song table**
+    "artist_location" VARCHAR(25), **artist_location from staging song table**
+    "artist_latitude" DOUBLE PRECISION, **artist_latitude from staging song table**
+    "artist_longitude" DOUBLE PRECISION **artist_longitude from staging song table**
+);
+""")
+
+time_table_create = ("""
+CREATE TABLE "time_table" (
+    "timestamp_id" TIMESTAMP NOT NULL, **ts from staging event table**
+    "start_time" TIME NOT NULL, **extract from timestamp (ts) in staging event table**
+    "hour" TIME NOT NULL, **extract from timestamp (ts) in staging event table**
+    "day" TIME NOT NULL, **extract from timestamp (ts) in staging event table**
+    "week" TIME NOT NULL, **extract from timestamp (ts) in staging event table**
+    "month" TIME NOT NULL, **extract from timestamp (ts) in staging event table**
+    "year" TIME NOT NULL, **extract from timestamp (ts) in staging event table**
+    "weekday" TIME NOT NULL **extract from timestamp (ts) in staging event table**
+    
+);
+""")

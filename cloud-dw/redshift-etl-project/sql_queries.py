@@ -25,16 +25,16 @@ time_table_drop = "DROP TABLE IF EXISTS 'time_table';"
 # Staging tables
 staging_events_table_create= ("""
 CREATE TABLE "staging_events_table" (
-    "id" IDENTITY(0,1) INTEGER NOT NULL,
-    "artist" VARCHAR(25),
+    "event_table_id" IDENTITY(0,1) PRIMARY KEY,
+    "artist" VARCHAR(50),
     "auth" VARCHAR(10) NOT NULL,
     "firstName" VARCHAR(19) NOT NULL,
     "gender" VARCHAR(5) NOT NULL,
-    "itemInSession" INTEGER NOT NULL,
+    "itemInSession" SMALLINT NOT NULL,
     "lastName" VARCHAR(15) NOT NULL,
-    "length" DOUBLE PRECISION,
+    "length" DECIMAL (7,5),
     "level" VARCHAR(5) NOT NULL,
-    "location" VARCHAR(25) NOT NULL,
+    "location" VARCHAR(50) NOT NULL,
     "method" VARCHAR(5) NOT NULL,
     "page" VARCHAR(10) NOT NULL,
     "registration" BIGINT NOT NULL,
@@ -49,16 +49,16 @@ CREATE TABLE "staging_events_table" (
 
 staging_songs_table_create = ("""
 CREATE TABLE "staging_songs_table" (
-    "id" IDENTITY(0,1) INTEGER NOT NULL,
-    "num_songs" INTEGER NOT NULL,
+    "song_table_id" IDENTITY(0,1) PRIMARY KEY,
+    "num_songs" SMALLINT NOT NULL,
     "artist_id" VARCHAR(25) NOT NULL,
-    "artist_latitude" GEOGRAPHY,
-    "artist_longitude" GEOGRAPHY,
-    "artist_location" GEOGRAPHY,
+    "artist_latitude" DOUBLE PRECISION,
+    "artist_longitude" DOUBLE PRECISION,
+    "artist_location" VARCHAR(25),
     "artist_name" VARCHAR(25) NOT NULL,
     "song_id" VARCHAR(25) NOT NULL,
     "title" VARCHAR(25) NOT NULL,
-    "duration" DOUBLE PRECISION,
+    "duration" DECIMAL (7,5),
     "year" INTEGER NOT NULL
 );
 """)
@@ -68,7 +68,7 @@ CREATE TABLE "staging_songs_table" (
 songplay_table_create = ("""
 CREATE TABLE "songplay_table" (
     "songplay_id" IDENTITY(0,1) INTEGER NOT NULL,
-    "start_time" TIME NOT NULL,
+    "start_time" TIME NOT NULL, 
     "user_id" INTEGER NOT NULL,
     "level"  VARCHAR(5) NOT NULL,
     "song_id" VARCHAR(25) NOT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE "song_table" (
     "title" VARCHAR(25) NOT NULL,
     "artist_id" VARCHAR(25) NOT NULL,
     "year"  INTEGER NOT NULL,
-    "duration" DOUBLE PRECISION
+    "duration" DECIMAL (7,5)
 );
 """)
 
@@ -107,12 +107,13 @@ artist_table_create = ("""
 CREATE TABLE "artist_table" (
     "artist_id" VARCHAR(25) NOT NULL,
     "artist_name" VARCHAR(25) NOT NULL,
-    "artist_location" GEOGRAPHY,
-    "artist_latitude" GEOGRAPHY,
-    "artist_longitude" GEOGRAPHY
+    "artist_location" VARCHAR(25),
+    "artist_latitude" DOUBLE PRECISION,
+    "artist_longitude" DOUBLE PRECISION
 );
 """)
 
+# time_table
 time_table_create = ("""
 CREATE TABLE "time_table" (
     "timestamp_id" TIMESTAMP NOT NULL,
