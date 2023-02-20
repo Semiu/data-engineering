@@ -135,21 +135,51 @@ staging_events_copy = ("""copy staging_events_table from '{}' credentials 'aws_i
 staging_songs_copy = ("""copy staging_songs_table from '{}' credentials 'aws_iam_role={}' region 'us-west-2';
 """).format(SONG_DATA, ARN)
 
-
 # FINAL TABLES - SQL to SQL ELT, selecting from the staging tables to designated fact and dimension tables
 songplay_table_insert = ("""
+INSERT INTO "songplay_table"(start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
+SELECT EXTRACT(time FROM ts) AS start_time,
+    userId AS user_id, level, song_id, artist_id,
+    sessionid AS session_id, location,
+    userAgent AS user_agent
+FROM staging_events_table ste
+JOIN staging_songs_table sts ON (ste.artist = sts.artist_name)
+LEFT JOIN staging_songs_table stsb ON (ste.song = stsb.title);
 """)
 
 user_table_insert = ("""
+INSERT INTO "user_table"(user_id, first_name, last_name, gender, level)
+SELECT userId AS user_id,
+    firstName AS first_name,
+    lastName AS last_name,
+    gender, level
+FROM staging_events_table;
 """)
 
 song_table_insert = ("""
+INSERT INTO "song_table"(song_id, title, artist_id, year, duration)
+SELECT song_id, title, artist_id, year, duration
+FROM staging_songs_table;
 """)
 
 artist_table_insert = ("""
+INSERT INTO "artist_table"(artist_id, artist_name, artist_location, artist_latitude, artist_longitude)
+SELECT artist_id, artist_name, artist_location, artist_latitude, artist_longitude
+FROM staging_songs_table;
 """)
 
+# Here
 time_table_insert = ("""
+INSERT INTO "time_table"(timestamp_id, start_time)
+SELECT ts AS timestamp_id,
+    EXTRACT(time FROM ts) AS start_time,
+    EXTRACT(hour FROM ts) AS hour,
+    EXTRACT(day FROM ts) AS day,
+    EXTRACT(week FROM ts) AS week,
+    EXTRACT(month FROM ts) AS month,
+    EXTRACT(year FROM ts) AS year,
+    EXTRACT(weekday FROM ts) AS weekday
+FROM staging_events_table;
 """)
 
 
