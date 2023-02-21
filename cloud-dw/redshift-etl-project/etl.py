@@ -1,19 +1,24 @@
 import configparser
 import psycopg2
-from sql_queries import copy_table_queries, insert_table_queries
+from sql_queries import copy_table_queries, insert_table_queries, analytics_queries
 
-
+# Function to execute the copy_table_queries
 def load_staging_tables(cur, conn):
     for query in copy_table_queries:
         cur.execute(query)
         conn.commit()
 
-
+# Function to execute the insert_table_queries
 def insert_tables(cur, conn):
     for query in insert_table_queries:
         cur.execute(query)
         conn.commit()
 
+# Function to execute the analytics_queries
+def analyze_data(cur, conn):
+    for query in analytics_queries:
+        cur.execute(query)
+        conn.commit()
 
 def main():
     config = configparser.ConfigParser()
@@ -24,6 +29,7 @@ def main():
     
     load_staging_tables(cur, conn)
     insert_tables(cur, conn)
+    analyze_data(cur, conn)
 
     conn.close()
 

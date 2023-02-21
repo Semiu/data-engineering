@@ -168,7 +168,6 @@ SELECT artist_id, artist_name, artist_location, artist_latitude, artist_longitud
 FROM staging_songs_table;
 """)
 
-# Here
 time_table_insert = ("""
 INSERT INTO "time_table"(timestamp_id, start_time)
 SELECT ts AS timestamp_id,
@@ -182,9 +181,41 @@ SELECT ts AS timestamp_id,
 FROM staging_events_table;
 """)
 
+# Analytic Queries
+
+gender_stats = ("""
+SELECT first_name, last_name, gender, location 
+    FROM user_table ut
+    JOIN songplay_table st
+    ON ut.user_id = st.user_id
+GROUP BY gender;    
+""")
+
+artists_stats = ("""
+SELECT artist_id, artist_name, artist_location,
+	FROM artist_table at
+    JOIN songplay_table st
+    ON at.artist_id = st.artist_id
+    GROUP BY artist_location
+""")
+
+songs_stats = ("""
+SELECT song_id, title, artist_id, year, duration 
+    FROM song_table sgt
+    JOIN songplay_table st
+    ON sgt.song_id = st.song_id
+GROUP BY artist_id;    
+""")
+
+
+
+
 
 # QUERY LISTS
 create_table_queries = [staging_events_table_create, staging_songs_table_create, songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create]
 drop_table_queries = [staging_events_table_drop, staging_songs_table_drop, songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
 copy_table_queries = [staging_events_copy, staging_songs_copy]
 insert_table_queries = [songplay_table_insert, user_table_insert, song_table_insert, artist_table_insert, time_table_insert]
+
+# These are the added analytics queries - relying on the fact-dimension schema designed
+analytics_queries = [gender_stats, artists_stats, songs_stats]

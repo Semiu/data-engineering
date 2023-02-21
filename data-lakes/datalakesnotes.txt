@@ -14,7 +14,7 @@ PySpark (https://spark.apache.org/docs/latest/api/python/getting_started/install
 
 Big Data Ecosystems, Spark, and Data Lakes
 The modern big data ecosystem is a technological response to the evolution of distributed data processing to handle the growing volume of data. This started with distributed
-file storage system (Hadoop HDFS), then massive parallel processing (MapReduce), and lately, Apache Spark. Hadoop + Spark led to the development of data lakes meant
+file storage system (Hadoop HDFS), then massive parallel processing (MapReduce), and lately, Apache Spark. Hadoop + Spark led to the development of data lakes 
 to process a large amount of structured and unstructured data.
 
 The current development is lakehouse which is an amalgamation of a data lake (distributed file storage for structured, semi-structured and unstructured data), Spark (massively 
@@ -25,10 +25,10 @@ Hadoop and MapReduce
 Hadoop and Spark evolved the data warehouse into the data lake. 
 Data warehouses are based on explicit and specific data structures, structured data poised to ELT to serve BI, reports, etc. They do not perform well with unstructured data.
 
-Data lakes, on the other hand, are capable of ingesting massive amount of unstructured and structured data, having Spark providing processing strength for the dataset. Data lakes,
-unfortunately, cannot support transaction and perform poorly on changing datasets. Data governance is also difficult due to unstructured nature.
+Data lakes, on the other hand, are capable of ingesting the massive amount of unstructured and structured data, having Spark providing processing strength for the dataset. Data lakes,
+unfortunately, cannot support transactions and perform poorly on changing datasets. Data governance is also difficult due to its unstructured nature.
 
-To address this, modern lake houses combine the strengths of data warehouses and data lakes into a single architrecture.
+To address this, modern lake houses combine the strengths of data warehouses and data lakes into a single architecture.
 
 Spark and Spark Cluster
 
