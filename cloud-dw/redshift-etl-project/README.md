@@ -22,27 +22,9 @@ The create scripts which include the `CREATE` and `DROP` queries, and the `INSER
 
 A section on analytics, providing descriptive information about the songs, users, and artists, is also provided. 
 
-## Pending issues
-
-This project is not yet completed but I could not get specific helps that address my situation. I would approeciate reviews of my SQL queries, schema design, among others.
-
-In particular, I am running to these errors while running the `create_tables.py` script. All attempts, including adding the IAM role, were not fruitious. 
-
-Error
-![tcp connection error](error.jpg)
-
-![Could not update the IAM roles](error2.jpg)
-![](error3.jpg)
 
 ## How to run 
 
 First, run `create_tables.py` script to take care of creation of the tables.
 
 Second, run `etl.py` script for the ETL, and the added analytics queries.
-
-
-
-
-
-
-
