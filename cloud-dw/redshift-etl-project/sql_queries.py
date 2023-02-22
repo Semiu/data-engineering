@@ -13,19 +13,19 @@ LOG_JSONPATH = config.get("S3","LOG_JSONPATH") # Log JSON path
 SONG_DATA = config.get("S3","SONG_DATA") # Song Data
 
 # DROP TABLES - Queries to drop each of the tables created, if exists
-staging_events_table_drop = "DROP TABLE IF EXISTS 'staging_events_table';"
-staging_songs_table_drop = "DROP TABLE IF EXISTS 'staging_songs_table';"
-songplay_table_drop = "DROP TABLE IF EXISTS 'songplay_table';"
-user_table_drop = "DROP TABLE IF EXISTS 'user_table';"
-song_table_drop = "DROP TABLE IF EXISTS 'song_table';"
-artist_table_drop = "DROP TABLE IF EXISTS 'artist_table';"
-time_table_drop = "DROP TABLE IF EXISTS 'time_table';"
+staging_events_table_drop = """DROP TABLE IF EXISTS staging_events_table;"""
+staging_songs_table_drop = """DROP TABLE IF EXISTS staging_songs_table;"""
+songplay_table_drop = """DROP TABLE IF EXISTS songplay_table;"""
+user_table_drop = """DROP TABLE IF EXISTS user_table;"""
+song_table_drop = """DROP TABLE IF EXISTS song_table;"""
+artist_table_drop = """DROP TABLE IF EXISTS artist_table;"""
+time_table_drop = """DROP TABLE IF EXISTS time_table;"""
 
 # CREATE TABLES
 # Staging tables
 staging_events_table_create= ("""
 CREATE TABLE "staging_events_table" (
-    "event_table_id" IDENTITY(0,1) PRIMARY KEY,
+    "event_table_id" INT IDENTITY(0,1) PRIMARY KEY,
     "artist" VARCHAR(50),
     "auth" VARCHAR(10) NOT NULL,
     "firstName" VARCHAR(19) NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE "staging_events_table" (
 
 staging_songs_table_create = ("""
 CREATE TABLE "staging_songs_table" (
-    "song_table_id" IDENTITY(0,1) PRIMARY KEY,
+    "song_table_id" INT IDENTITY(0,1) PRIMARY KEY,
     "num_songs" SMALLINT NOT NULL,
     "artist_id" VARCHAR(25) NOT NULL,
     "artist_latitude" DOUBLE PRECISION,
@@ -67,8 +67,8 @@ CREATE TABLE "staging_songs_table" (
 # songplay_table
 songplay_table_create = ("""
 CREATE TABLE "songplay_table" (
-    "songplay_id" IDENTITY(0,1) INTEGER NOT NULL,
-    "start_time" TIME NOT NULL, 
+    "songplay_id" INTEGER IDENTITY(0,1) PRIMARY KEY,
+    "start_time" TIME, 
     "user_id" INTEGER NOT NULL,
     "level"  VARCHAR(5) NOT NULL,
     "song_id" VARCHAR(25) NOT NULL,
@@ -129,10 +129,10 @@ CREATE TABLE "time_table" (
 """)
 
 # STAGING TABLES - Copy from the designated s3 bucket to their respective staging tables
-staging_events_copy = ("""copy staging_events_table from '{}' credentials 'aws_iam_role={}' region 'us-west-2';
+staging_events_copy = ("""copy staging_events_table from '{}' credentials 'aws_iam_role={}' json 's3://udacity-dend/log_json_path.json' region 'us-west-2';
 """).format(LOG_DATA, ARN)
 
-staging_songs_copy = ("""copy staging_songs_table from '{}' credentials 'aws_iam_role={}' region 'us-west-2';
+staging_songs_copy = ("""copy staging_songs_table from '{}' credentials 'aws_iam_role={}' format as JSON 'auto' region 'us-west-2';
 """).format(SONG_DATA, ARN)
 
 # FINAL TABLES - SQL to SQL ELT, selecting from the staging tables to designated fact and dimension tables

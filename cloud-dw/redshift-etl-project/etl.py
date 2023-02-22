@@ -4,6 +4,9 @@ from sql_queries import copy_table_queries, insert_table_queries, analytics_quer
 
 # Function to execute the copy_table_queries
 def load_staging_tables(cur, conn):
+    """
+    This function executes the queries in the 
+    """
     for query in copy_table_queries:
         cur.execute(query)
         conn.commit()
@@ -16,6 +19,8 @@ def insert_tables(cur, conn):
 
 # Function to execute the analytics_queries
 def analyze_data(cur, conn):
+    """
+    """
     for query in analytics_queries:
         cur.execute(query)
         conn.commit()
