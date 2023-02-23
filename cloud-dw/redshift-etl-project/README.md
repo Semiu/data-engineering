@@ -14,9 +14,9 @@ Images provided in the project guide to depict the structure of these tables wer
 
 Though preliminary guide was provided for the fact-dimension relationship of the fact and dimension tables, there were further thoughts on the relationship between the tables to inform primary and foreign keys designation, even though Redshift does not enforce them. They would be used for query optimizer. The fact table has a relationship with the each of the dimension table. This would provide opportunity for aggregates and analysis. 
 
-These five dimension tables `user_table`, `song_table`, `artist_table` and `time_table` have `user_id`, `song_id`, `artist_id` and `timestamp_id` as their respective primary keys. These are equally identified as the foreign keys on the act table `songplay_table`. Non
+These five dimension tables `user_table`, `song_table`, `artist_table` and `time_table` have `user_id`, `song_id`, `artist_id` and `timestamp_id` as their respective primary keys. These are equally included in the `songplay_table`, but Redshift does not enforce referential integrity. Non-numeric data are used as primary keys in these dimension tables because they better fit into the data type of the source data.
 
-follow this pattern and the ETL SQL queries are provided to transform loaded data from the staging tables to the fact and dimension tables.
+These table relationships are used in the ETL SQL queries provided to transform the loaded data from the staging tables to the fact and dimension tables.
 
 ## Scripts
 
