@@ -24,79 +24,79 @@ time_table_drop = """DROP TABLE IF EXISTS time_table;"""
 # CREATE TABLES
 # Staging tables
 staging_events_table_create= ("""
-CREATE TABLE "staging_events_table" (
-    "event_table_id" INT IDENTITY(0,1) PRIMARY KEY,
+CREATE TABLE staging_events_table (
+    "event_table_id" INT IDENTITY(0,1),
     "artist" VARCHAR(50),
-    "auth" VARCHAR(10) NOT NULL,
-    "firstName" VARCHAR(19) NOT NULL,
-    "gender" VARCHAR(5) NOT NULL,
-    "itemInSession" SMALLINT NOT NULL,
-    "lastName" VARCHAR(15) NOT NULL,
-    "length" DECIMAL (7,5),
-    "level" VARCHAR(5) NOT NULL,
-    "location" VARCHAR(50) NOT NULL,
-    "method" VARCHAR(5) NOT NULL,
-    "page" VARCHAR(10) NOT NULL,
-    "registration" BIGINT NOT NULL,
-    "sessionid" INTEGER NOT NULL,
+    "auth" VARCHAR(10),
+    "firstName" VARCHAR(19),
+    "gender" VARCHAR(5),
+    "itemInSession" SMALLINT,
+    "lastName" VARCHAR(15),
+    "length" DECIMAL(13,2),
+    "level" VARCHAR(5),
+    "location" VARCHAR(50),
+    "method" VARCHAR(5),
+    "page" VARCHAR(10),
+    "registration" BIGINT,
+    "sessionid" INTEGER,
     "song" VARCHAR(100),
-    "status" INTEGER NOT NULL,
-    "ts" TIMESTAMP NOT NULL,
-    "userAgent" VARCHAR(100) NOT NULL,
-    "userId" INTEGER NOT NULL
+    "status" INTEGER,
+    "ts" TIMESTAMP,
+    "userAgent" VARCHAR(100),
+    "userId" INTEGER
 );
 """)
 
 staging_songs_table_create = ("""
-CREATE TABLE "staging_songs_table" (
-    "song_table_id" INT IDENTITY(0,1) PRIMARY KEY,
-    "num_songs" SMALLINT NOT NULL,
-    "artist_id" VARCHAR(25) NOT NULL,
+CREATE TABLE staging_songs_table (
+    "song_table_id" INT IDENTITY(0,1),
+    "num_songs" SMALLINT,
+    "artist_id" VARCHAR(25),
     "artist_latitude" DOUBLE PRECISION,
     "artist_longitude" DOUBLE PRECISION,
     "artist_location" VARCHAR(25),
-    "artist_name" VARCHAR(25) NOT NULL,
-    "song_id" VARCHAR(25) NOT NULL,
-    "title" VARCHAR(25) NOT NULL,
-    "duration" DECIMAL (7,5),
-    "year" INTEGER NOT NULL
+    "artist_name" VARCHAR(25),
+    "song_id" VARCHAR(25),
+    "title" VARCHAR(25),
+    "duration" DECIMAL(13,2),
+    "year" INTEGER
 );
 """)
 
 # Fact table
 # songplay_table
 songplay_table_create = ("""
-CREATE TABLE "songplay_table" (
-    "songplay_id" INTEGER IDENTITY(0,1) PRIMARY KEY,
+CREATE TABLE songplay_table (
+    "songplay_id" INTEGER IDENTITY(0,1),
     "start_time" TIME, 
-    "user_id" INTEGER NOT NULL,
-    "level"  VARCHAR(5) NOT NULL,
-    "song_id" VARCHAR(25) NOT NULL,
-    "artist_id" VARCHAR(25) NOT NULL,
-    "session_id" INTEGER NOT NULL,
-    "location" VARCHAR(25) NOT NULL,
-    "user_agent" VARCHAR(100) NOT NULL
-);
+    "user_id" INTEGER,
+    "level"  VARCHAR(5),
+    "song_id" VARCHAR(25),
+    "artist_id" VARCHAR(25),
+    "session_id" INTEGER,
+    "location" VARCHAR(25),
+    "user_agent" VARCHAR(100)
+   );
 """)
 
 # Dimension tables
 # user table
 user_table_create = ("""
-CREATE TABLE "user_table" (
-    "user_id" INTEGER NOT NULL,
-    "first_name" VARCHAR(19) NOT NULL,
-    "last_name" VARCHAR(15) NOT NULL,
-    "gender" VARCHAR(5) NOT NULL,
-    "level" VARCHAR(5) NOT NULL
+CREATE TABLE user_table (
+    "user_id" INTEGER,
+    "first_name" VARCHAR(19),
+    "last_name" VARCHAR(15),
+    "gender" VARCHAR(5),
+    "level" VARCHAR(5)
 );
 """)
 
 # song_table
 song_table_create = ("""
-CREATE TABLE "song_table" (
-    "song_id" VARCHAR(25) NOT NULL,
-    "title" VARCHAR(25) NOT NULL,
-    "artist_id" VARCHAR(25) NOT NULL,
+CREATE TABLE song_table (
+    "song_id" VARCHAR(25),
+    "title" VARCHAR(25),
+    "artist_id" VARCHAR(25),
     "year"  INTEGER NOT NULL,
     "duration" DECIMAL (7,5)
 );
@@ -104,9 +104,9 @@ CREATE TABLE "song_table" (
 
 # artist_table
 artist_table_create = ("""
-CREATE TABLE "artist_table" (
-    "artist_id" VARCHAR(25) NOT NULL,
-    "artist_name" VARCHAR(25) NOT NULL,
+CREATE TABLE artist_table (
+    "artist_id" VARCHAR(25),
+    "artist_name" VARCHAR(25),
     "artist_location" VARCHAR(25),
     "artist_latitude" DOUBLE PRECISION,
     "artist_longitude" DOUBLE PRECISION
@@ -115,21 +115,21 @@ CREATE TABLE "artist_table" (
 
 # time_table
 time_table_create = ("""
-CREATE TABLE "time_table" (
-    "timestamp_id" TIMESTAMP NOT NULL,
-    "start_time" TIME NOT NULL,
-    "hour" TIME NOT NULL,
-    "day" TIME NOT NULL,
-    "week" TIME NOT NULL,
-    "month" TIME NOT NULL,
-    "year" TIME NOT NULL,
-    "weekday" TIME NOT NULL
+CREATE TABLE time_table (
+    "timestamp_id" VARCHAR(25),
+    "start_time" TIME,
+    "hour" DATETIME,
+    "day" DATETIME,
+    "week" DATETIME,
+    "month" DATETIME,
+    "year" DATETIME,
+    "weekday" DATETIME
     
 );
 """)
 
 # STAGING TABLES - Copy from the designated s3 bucket to their respective staging tables
-staging_events_copy = ("""copy staging_events_table from '{}' credentials 'aws_iam_role={}' json 's3://udacity-dend/log_json_path.json' region 'us-west-2';
+staging_events_copy = ("""copy staging_events_table from '{}' credentials 'aws_iam_role={}' format as JSON 'auto' region 'us-west-2';
 """).format(LOG_DATA, ARN)
 
 staging_songs_copy = ("""copy staging_songs_table from '{}' credentials 'aws_iam_role={}' format as JSON 'auto' region 'us-west-2';
@@ -138,7 +138,7 @@ staging_songs_copy = ("""copy staging_songs_table from '{}' credentials 'aws_iam
 # FINAL TABLES - SQL to SQL ELT, selecting from the staging tables to designated fact and dimension tables
 songplay_table_insert = ("""
 INSERT INTO "songplay_table"(start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
-SELECT EXTRACT(time FROM ts) AS start_time,
+SELECT DISTINCT EXTRACT(time FROM ts) AS start_time,
     userId AS user_id, level, song_id, artist_id,
     sessionid AS session_id, location,
     userAgent AS user_agent
@@ -149,7 +149,7 @@ LEFT JOIN staging_songs_table stsb ON (ste.song = stsb.title);
 
 user_table_insert = ("""
 INSERT INTO "user_table"(user_id, first_name, last_name, gender, level)
-SELECT userId AS user_id,
+SELECT DISTINCT userId AS user_id,
     firstName AS first_name,
     lastName AS last_name,
     gender, level
@@ -206,9 +206,6 @@ SELECT song_id, title, artist_id, year, duration
     ON sgt.song_id = st.song_id
 GROUP BY artist_id;    
 """)
-
-
-
 
 
 # QUERY LISTS
