@@ -6,15 +6,17 @@ The project demonstrates the understanding of using AWS services, such as S3, Re
 
 ## Schema Design
 
-The `sql_queries.py` contains scripts that define and implement the data warehouse schema
+The `sql_queries.py` contains scripts that define and implement the data warehouse schema.
 
-Seven (7) tables were implemented - 2 as the staging tables and 5 as the fact-schema tables. The staging tables; `staging_events_table` and `staging_songs_table`, schema reflect the structure of the data coming from the s3 buckets, and expected to be loaded into the staging tables in Redshift.
+Seven (7) tables were implemented - 2 as the staging tables and 5 as the fact-schema tables. The staging tables; `staging_events_table` and `staging_songs_table`, schema reflect the structure of the data coming from the s3 buckets, and expected to be loaded into the staging tables in Redshift. 
 
-Primary Key identity is given to these tables, following the Redshift `IDENTITY(0,1)` implementation. Respective data types are provided based on intuitive understanding of the data columns and the information about different types of data supported by Redshift. 
+Images provided in the project guide to depict the structure of these tables were used in deciding the data type, among others, while designing their respective schema. Primary Key identity is given to the staging tables, using the Redshift `INT IDENTITY(0,1) PRIMARY KEY` implementation. The identity column would be incrementally auto-populated. Respective data types are provided based on intuitive understanding of the data columns and the information about different types of data supported by Redshift. 
 
-Though preliminary guide was provided for the fact-dimension relationship of the fact and dimension tables. Further thought was given relationship keys even though Redshift does not enforce them. In this light, the fact table has a relationship with the each of the dimension table. This would provide opportunity for aggregates and analysis. 
+Though preliminary guide was provided for the fact-dimension relationship of the fact and dimension tables, there were further thoughts on the relationship between the tables to inform primary and foreign keys designation, even though Redshift does not enforce them. They would be used for query optimizer. The fact table has a relationship with the each of the dimension table. This would provide opportunity for aggregates and analysis. 
 
-These five fact-dimension tables `user_table`, `songplay_table`, `song_table`, `artist_table` and `time_table` follow this pattern and the ETL SQL queries are provided to transform loaded data from the staging tables to the fact and dimension tables.
+These five dimension tables `user_table`, `song_table`, `artist_table` and `time_table` have `user_id`, `song_id`, `artist_id` and `timestamp_id` as their respective primary keys. These are equally identified as the foreign keys on the act table `songplay_table`. Non
+
+follow this pattern and the ETL SQL queries are provided to transform loaded data from the staging tables to the fact and dimension tables.
 
 ## Scripts
 
