@@ -1,0 +1,9 @@
+MapReduce program in the Jupyter notebook
+
+The map step reads in a file one line at a time, creates name, value pairs for each line, and outputs these as tuples.
+The reduce step This step reduces all of the tuples collected in the map step, and sums their count.
+
+
+Spark and Spark Cluster
+
+Data Lakes - Features and Lakehouse architecture

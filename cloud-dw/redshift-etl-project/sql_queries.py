@@ -26,23 +26,23 @@ time_table_drop = """DROP TABLE IF EXISTS time_table;"""
 staging_events_table_create= ("""
 CREATE TABLE staging_events_table (
     "event_table_id" INT IDENTITY(0,1),
-    "artist" VARCHAR(50),
-    "auth" VARCHAR(10),
-    "firstName" VARCHAR(19),
-    "gender" VARCHAR(5),
+    "artist" VARCHAR(65535),
+    "auth" TEXT,
+    "firstName" TEXT,
+    "gender" TEXT,
     "itemInSession" SMALLINT,
-    "lastName" VARCHAR(15),
+    "lastName" TEXT,
     "length" DECIMAL(13,2),
-    "level" VARCHAR(5),
-    "location" VARCHAR(50),
-    "method" VARCHAR(5),
-    "page" VARCHAR(10),
+    "level" TEXT,
+    "location" TEXT,
+    "method" TEXT,
+    "page" TEXT,
     "registration" BIGINT,
     "sessionid" INTEGER,
-    "song" VARCHAR(100),
+    "song" TEXT,
     "status" INTEGER,
-    "ts" TIMESTAMP,
-    "userAgent" VARCHAR(100),
+    "ts" BIGINT,
+    "userAgent" VARCHAR(65535),
     "userId" INTEGER
 );
 """)
@@ -51,14 +51,14 @@ staging_songs_table_create = ("""
 CREATE TABLE staging_songs_table (
     "song_table_id" INT IDENTITY(0,1),
     "num_songs" SMALLINT,
-    "artist_id" VARCHAR(25),
+    "artist_id" VARCHAR(65535),
     "artist_latitude" DOUBLE PRECISION,
     "artist_longitude" DOUBLE PRECISION,
-    "artist_location" VARCHAR(25),
-    "artist_name" VARCHAR(25),
-    "song_id" VARCHAR(25),
-    "title" VARCHAR(25),
-    "duration" DECIMAL(13,2),
+    "artist_location" TEXT,
+    "artist_name" VARCHAR(65535),
+    "song_id" TEXT,
+    "title" VARCHAR(65535),
+    "duration" DECIMAL(26,7),
     "year" INTEGER
 );
 """)
@@ -70,12 +70,12 @@ CREATE TABLE songplay_table (
     "songplay_id" INTEGER IDENTITY(0,1),
     "start_time" TIME, 
     "user_id" INTEGER,
-    "level"  VARCHAR(5),
-    "song_id" VARCHAR(25),
-    "artist_id" VARCHAR(25),
+    "level"  TEXT,
+    "song_id" TEXT,
+    "artist_id" VARCHAR(65535),
     "session_id" INTEGER,
-    "location" VARCHAR(25),
-    "user_agent" VARCHAR(100)
+    "location" TEXT,
+    "user_agent" VARCHAR(65535)
    );
 """)
 
@@ -84,30 +84,30 @@ CREATE TABLE songplay_table (
 user_table_create = ("""
 CREATE TABLE user_table (
     "user_id" INTEGER,
-    "first_name" VARCHAR(19),
-    "last_name" VARCHAR(15),
-    "gender" VARCHAR(5),
-    "level" VARCHAR(5)
+    "first_name" TEXT,
+    "last_name" TEXT,
+    "gender" TEXT,
+    "level" TEXT
 );
 """)
 
 # song_table
 song_table_create = ("""
 CREATE TABLE song_table (
-    "song_id" VARCHAR(25),
-    "title" VARCHAR(25),
-    "artist_id" VARCHAR(25),
-    "year"  INTEGER NOT NULL,
-    "duration" DECIMAL (7,5)
+    "song_id" TEXT,
+    "title" VARCHAR(65535),
+    "artist_id" VARCHAR(65535),
+    "year"  INTEGER,
+    "duration" DECIMAL(26,7)
 );
 """)
 
 # artist_table
 artist_table_create = ("""
 CREATE TABLE artist_table (
-    "artist_id" VARCHAR(25),
-    "artist_name" VARCHAR(25),
-    "artist_location" VARCHAR(25),
+    "artist_id" VARCHAR(65535),
+    "artist_name" VARCHAR(65535),
+    "artist_location" TEXT,
     "artist_latitude" DOUBLE PRECISION,
     "artist_longitude" DOUBLE PRECISION
 );
@@ -138,9 +138,11 @@ staging_songs_copy = ("""copy staging_songs_table from '{}' credentials 'aws_iam
 # FINAL TABLES - SQL to SQL ELT, selecting from the staging tables to designated fact and dimension tables
 songplay_table_insert = ("""
 INSERT INTO "songplay_table"(start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
-SELECT DISTINCT EXTRACT(time FROM ts) AS start_time,
-    userId AS user_id, level, song_id, artist_id,
-    sessionid AS session_id, location,
+SELECT DISTINCT (timestamp 'epoch' + ts * interval '1 second') AS time_stamp,
+    (to_char(time_stamp, 'HH24:MI:SS')) AS start_time,
+    userId::integer  AS user_id, 
+    ste.level, sts.song_id, sts.artist_id,
+    sessionid AS session_id, ste.location,
     userAgent AS user_agent
 FROM staging_events_table ste
 JOIN staging_songs_table sts ON (ste.artist = sts.artist_name)
@@ -149,7 +151,7 @@ LEFT JOIN staging_songs_table stsb ON (ste.song = stsb.title);
 
 user_table_insert = ("""
 INSERT INTO "user_table"(user_id, first_name, last_name, gender, level)
-SELECT DISTINCT userId AS user_id,
+SELECT DISTINCT userId::integer AS user_id,
     firstName AS first_name,
     lastName AS last_name,
     gender, level
@@ -158,31 +160,31 @@ FROM staging_events_table;
 
 song_table_insert = ("""
 INSERT INTO "song_table"(song_id, title, artist_id, year, duration)
-SELECT song_id, title, artist_id, year, duration
+SELECT DISTINCT song_id, title, artist_id, year, duration
 FROM staging_songs_table;
 """)
 
 artist_table_insert = ("""
 INSERT INTO "artist_table"(artist_id, artist_name, artist_location, artist_latitude, artist_longitude)
-SELECT artist_id, artist_name, artist_location, artist_latitude, artist_longitude
+SELECT DISTINCT artist_id, artist_name, artist_location, artist_latitude, artist_longitude
 FROM staging_songs_table;
 """)
 
 time_table_insert = ("""
-INSERT INTO "time_table"(timestamp_id, start_time)
-SELECT ts AS timestamp_id,
-    EXTRACT(time FROM ts) AS start_time,
-    EXTRACT(hour FROM ts) AS hour,
-    EXTRACT(day FROM ts) AS day,
-    EXTRACT(week FROM ts) AS week,
-    EXTRACT(month FROM ts) AS month,
-    EXTRACT(year FROM ts) AS year,
-    EXTRACT(weekday FROM ts) AS weekday
+INSERT INTO "time_table"(timestamp_id, start_time, hour, day, week, month, year, weekday)
+SELECT DISTINCT ts AS timestamp_id, 
+    (timestamp 'epoch' + ts * interval '1 second') AS time_stamp,
+    to_char(time_stamp, 'HH24:MI:SS') AS start_time,
+    EXTRACT(hour FROM time_stamp) AS hour,
+    EXTRACT(day FROM time_stamp) AS day,
+    EXTRACT(week FROM time_stamp) AS week,
+    EXTRACT(month FROM time_stamp) AS month,
+    EXTRACT(year FROM time_stamp) AS year,
+    EXTRACT(weekday FROM time_stamp) AS weekday
 FROM staging_events_table;
 """)
 
 # Analytic Queries
-
 gender_stats = ("""
 SELECT first_name, last_name, gender, location 
     FROM user_table ut
