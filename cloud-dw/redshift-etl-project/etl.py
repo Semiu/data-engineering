@@ -29,7 +29,12 @@ def analyze_data(cur, conn):
     imported from sql_queries scripts
     """
     for query in analytics_queries:
+        print(f'******Analytics Query*****')
         cur.execute(query)
+        row = cur.fetchone()
+        while row:
+            print(row)
+            row = cur.fetchone()
         conn.commit()
 
 def main():
@@ -44,7 +49,7 @@ def main():
     # Each of the defined functions are called
     load_staging_tables(cur, conn)
     insert_tables(cur, conn)
-    print(analyze_data(cur, conn))
+    analyze_data(cur, conn)
 
     # Close the connection
     conn.close()

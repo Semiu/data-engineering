@@ -31,8 +31,7 @@ At the last stage, the values
 
 Hadoop and Spark evolved the data warehouse into the data lake. 
 Data warehouses are based on explicit and specific data structures, structured data poised to ELT to serve BI, reports, etc. They do not perform well with unstructured data.
-Data lakes, on the other hand, are capable of ingesting the massive amount of unstructured and structured data, having Spark providing processing strength for the dataset. Data lakes,
-unfortunately, cannot support transactions and perform poorly on changing datasets. Data governance is also difficult due to its unstructured nature.
+Data lakes, on the other hand, are capable of ingesting the massive amount of unstructured and structured data, having Spark providing processing strength for the dataset. Data lakes, unfortunately, cannot support transactions and perform poorly on changing datasets. Data governance is also difficult due to its unstructured nature.
 To address this, modern lake houses combine the strengths of data warehouses and data lakes into a single architecture.
 
 How is Spark related to Hadoop?
@@ -44,3 +43,21 @@ Data streaming -
 
 (b) Apache Flink (https://flink.apache.org/)
 (c) Apache Storm (https://storm.apache.org/)
+
+Data Lakes - Features and Lakehouse architecture
+Though data lakes were improvements from data warehouses, it led to some weaknesses and in the course of ingesting large amount of unstructured data, we lost atomic transaction (failed production jobs left data in a corrupted state), quality enforcement (inconsistent and unusable data) and consistency in data structures (impossible to 
+stream and batch process while ingesting). This leads to new solution in the Lakehouse architecture.
+
+Lakehouse architecture's core contribution is the addition of metadata and a governance layer on top of delta lake which is the ETL for any or all types of data (structured, semi-structured and unstructured). This gives a pool of raw data and curated set of data, into three data quality levels: Raw ingestion and history (Bronze), Filtered, cleaned, augmented (Silver), and business level aggregates (gold). This gold level can be supplied to streaming analytics, AI and reporting, and any other downstream usages.
+
+
+
+
+
+
+
+
+
+
+
+

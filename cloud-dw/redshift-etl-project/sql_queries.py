@@ -68,7 +68,7 @@ CREATE TABLE staging_songs_table (
 songplay_table_create = ("""
 CREATE TABLE songplay_table (
     "songplay_id" INTEGER IDENTITY(0,1),
-    "start_time" TIME, 
+    "start_time" TIMESTAMP, 
     "user_id" INTEGER,
     "level"  TEXT,
     "song_id" TEXT,
@@ -138,7 +138,7 @@ staging_songs_copy = ("""copy staging_songs_table from '{}' credentials 'aws_iam
 # FINAL TABLES - SQL to SQL ELT, selecting from the staging tables to designated fact and dimension tables
 songplay_table_insert = ("""
 INSERT INTO "songplay_table"(start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
-SELECT DISTINCT (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS')) AS start_time,
+SELECT DISTINCT (timestamp 'epoch' + ts * interval '0.001 seconds') AS start_time,
     userId AS user_id, 
     ste.level, sts.song_id, sts.artist_id,
     sessionid AS session_id, ste.location,
@@ -173,39 +173,30 @@ FROM staging_songs_table;
 time_table_insert = ("""
 INSERT INTO "time_table"(timestamp_id, start_time, hour, day, week, month, year, weekday)
 SELECT DISTINCT ts AS timestamp_id, 
-    (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS')) AS start_time,
-    EXTRACT(hour FROM (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS'))) AS hour,
-    EXTRACT(day FROM (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS'))) AS day,
-    EXTRACT(week FROM (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS'))) AS week,
-    EXTRACT(month FROM (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS'))) AS month,
-    EXTRACT(year FROM (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS'))) AS year,
-    EXTRACT(weekday FROM (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS'))) AS weekday
+    (timestamp 'epoch' + ts * interval '0.001 seconds') AS start_time,
+    EXTRACT(hour FROM start_time) AS hour,
+    EXTRACT(day FROM start_time) AS day,
+    EXTRACT(week FROM start_time) AS week,
+    EXTRACT(month FROM start_time) AS month,
+    EXTRACT(year FROM start_time) AS year,
+    EXTRACT(weekday FROM start_time) AS weekday
 FROM staging_events_table;
 """)
 
 # Analytic Queries
-gender_stats = ("""
-SELECT first_name, last_name, gender, location 
-    FROM user_table ut
-    JOIN songplay_table st
-    ON ut.user_id = st.user_id
-GROUP BY gender;    
-""")
 
 artists_stats = ("""
-SELECT artist_id, artist_name, artist_location,
+SELECT at.artist_id, artist_name, artist_location
 	FROM artist_table at
     JOIN songplay_table st
-    ON at.artist_id = st.artist_id
-    GROUP BY artist_location
+    ON at.artist_id = st.artist_id LIMIT 10;
 """)
 
 songs_stats = ("""
-SELECT song_id, title, artist_id, year, duration 
+SELECT sgt.song_id, title, sgt.artist_id, year, duration 
     FROM song_table sgt
     JOIN songplay_table st
-    ON sgt.song_id = st.song_id
-GROUP BY artist_id;    
+    ON sgt.song_id = st.song_id LIMIT 10;   
 """)
 
 
@@ -216,4 +207,4 @@ copy_table_queries = [staging_events_copy, staging_songs_copy]
 insert_table_queries = [songplay_table_insert, user_table_insert, song_table_insert, artist_table_insert, time_table_insert]
 
 # These are the added analytics queries - relying on the fact-dimension schema designed
-analytics_queries = [gender_stats, artists_stats, songs_stats]
+analytics_queries = [artists_stats, songs_stats]

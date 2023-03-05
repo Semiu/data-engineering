@@ -1,9 +1,30 @@
 MapReduce program in the Jupyter notebook
 
-The map step reads in a file one line at a time, creates name, value pairs for each line, and outputs these as tuples.
-The reduce step This step reduces all of the tuples collected in the map step, and sums their count.
+The map step reads in a file one line at a time, creates a name, and value pairs for each line, and outputs these as tuples.
+The reduce step This step reduces all of the tuples collected in the map step and sums their count.
 
+This comes from the general idea of distributed computing, where a big computational job is executed across a cluster of nodes. Each node is responsible for a set of operations 
+on a subset of data. The partial results are combined at the end to get the final answer. The master node is responsible for orchestrating the tasks across the clusters. The
+workers are performing the actual computations.
 
 Spark and Spark Cluster
+Spark Modes
+	Local Mode: User's machine where we use the Spark API on a single machine.
+	Distributed Modes: This requires a cluster manager and a separate process that manages the available resources and ensures all machines are responsive during the job.
+		(a) Standalone cluster manager (cluster mode) - Spark cluster driver which acts as the master and is responsible for scheduling tasks, (b) YARN from the Hadoop project - useful when sharing resources with the team, 
+		(c) Mesos (an open source project).
+				 
 
-Data Lakes - Features and Lakehouse architecture
+Spark Use cases
+Spark is primarily meant for big data that cannot fit into a single computer. For datasets that can fit into a single computer, tools like AWK - a command tool for 
+manipulating text files, R, and Python libraries can be used. Pandas and SQL can be leveraged simultaneously using SQLAlchemy library, and for machine learning use cases,
+we can use scikit-learn for machine learning, and Tensforflow and PyTorch for deep learning
+	Data analytics (https://spark.apache.org/sql/)
+	Machine Learning (https://spark.apache.org/mllib/)
+	Streaming (https://spark.apache.org/streaming/)
+	Graph analytics (https://spark.apache.org/graphx/)
+
+Spark is limited in its streaming latency. Storm, Apex and Flink are better in this regard. It is also limited in its supported machine learning algorithms. Spark only
+supports algorithms that linearly scale. Therefore, it does not support deep learning, even though there are projects that integrate Spark with TensorFlow.
+
+Apache Spark fits in as data engineering, data analytics and data science tool. It can be used for building data lakes and lakehouses architectures

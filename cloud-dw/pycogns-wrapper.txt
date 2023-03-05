@@ -21,3 +21,8 @@ quit()
 File "C:\Users\Admin\Documents\data-engineering\cloud-dw\redshift-etl-project\etl.py", line 22, in insert_tables
 psycopg2.errors.DatatypeMismatch: column "user_id" is of type integer but expression is of type text
 HINT:  You will need to rewrite or cast the expression.
+
+LEFT JOIN staging_songs_table stsb ON (ste.song = stsb.title);
+
+
+(timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS')
