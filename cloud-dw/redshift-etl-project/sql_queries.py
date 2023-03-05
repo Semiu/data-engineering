@@ -116,14 +116,14 @@ CREATE TABLE artist_table (
 # time_table
 time_table_create = ("""
 CREATE TABLE time_table (
-    "timestamp_id" VARCHAR(25),
-    "start_time" TIME,
-    "hour" DATETIME,
-    "day" DATETIME,
-    "week" DATETIME,
-    "month" DATETIME,
-    "year" DATETIME,
-    "weekday" DATETIME
+    "timestamp_id" BIGINT,
+    "start_time" TIMESTAMP,
+    "hour" INTEGER,
+    "day" INTEGER,
+    "week" INTEGER,
+    "month" INTEGER,
+    "year" INTEGER,
+    "weekday" INTEGER
     
 );
 """)
@@ -138,9 +138,8 @@ staging_songs_copy = ("""copy staging_songs_table from '{}' credentials 'aws_iam
 # FINAL TABLES - SQL to SQL ELT, selecting from the staging tables to designated fact and dimension tables
 songplay_table_insert = ("""
 INSERT INTO "songplay_table"(start_time, user_id, level, song_id, artist_id, session_id, location, user_agent)
-SELECT DISTINCT (timestamp 'epoch' + ts * interval '1 second') AS time_stamp,
-    (to_char(time_stamp, 'HH24:MI:SS')) AS start_time,
-    userId::integer  AS user_id, 
+SELECT DISTINCT (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS')) AS start_time,
+    userId AS user_id, 
     ste.level, sts.song_id, sts.artist_id,
     sessionid AS session_id, ste.location,
     userAgent AS user_agent
@@ -151,7 +150,7 @@ LEFT JOIN staging_songs_table stsb ON (ste.song = stsb.title);
 
 user_table_insert = ("""
 INSERT INTO "user_table"(user_id, first_name, last_name, gender, level)
-SELECT DISTINCT userId::integer AS user_id,
+SELECT DISTINCT userId AS user_id,
     firstName AS first_name,
     lastName AS last_name,
     gender, level
@@ -163,6 +162,7 @@ INSERT INTO "song_table"(song_id, title, artist_id, year, duration)
 SELECT DISTINCT song_id, title, artist_id, year, duration
 FROM staging_songs_table;
 """)
+ 
 
 artist_table_insert = ("""
 INSERT INTO "artist_table"(artist_id, artist_name, artist_location, artist_latitude, artist_longitude)
@@ -173,14 +173,13 @@ FROM staging_songs_table;
 time_table_insert = ("""
 INSERT INTO "time_table"(timestamp_id, start_time, hour, day, week, month, year, weekday)
 SELECT DISTINCT ts AS timestamp_id, 
-    (timestamp 'epoch' + ts * interval '1 second') AS time_stamp,
-    to_char(time_stamp, 'HH24:MI:SS') AS start_time,
-    EXTRACT(hour FROM time_stamp) AS hour,
-    EXTRACT(day FROM time_stamp) AS day,
-    EXTRACT(week FROM time_stamp) AS week,
-    EXTRACT(month FROM time_stamp) AS month,
-    EXTRACT(year FROM time_stamp) AS year,
-    EXTRACT(weekday FROM time_stamp) AS weekday
+    (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS')) AS start_time,
+    EXTRACT(hour FROM (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS'))) AS hour,
+    EXTRACT(day FROM (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS'))) AS day,
+    EXTRACT(week FROM (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS'))) AS week,
+    EXTRACT(month FROM (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS'))) AS month,
+    EXTRACT(year FROM (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS'))) AS year,
+    EXTRACT(weekday FROM (to_timestamp((timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS'))) AS weekday
 FROM staging_events_table;
 """)
 

@@ -44,7 +44,7 @@ def main():
     # Each of the defined functions are called
     load_staging_tables(cur, conn)
     insert_tables(cur, conn)
-    analyze_data(cur, conn)
+    print(analyze_data(cur, conn))
 
     # Close the connection
     conn.close()
