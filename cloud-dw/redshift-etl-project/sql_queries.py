@@ -162,7 +162,6 @@ INSERT INTO "song_table"(song_id, title, artist_id, year, duration)
 SELECT DISTINCT song_id, title, artist_id, year, duration
 FROM staging_songs_table;
 """)
- 
 
 artist_table_insert = ("""
 INSERT INTO "artist_table"(artist_id, artist_name, artist_location, artist_latitude, artist_longitude)
@@ -198,7 +197,6 @@ SELECT sgt.song_id, title, sgt.artist_id, year, duration
     JOIN songplay_table st
     ON sgt.song_id = st.song_id LIMIT 10;   
 """)
-
 
 # QUERY LISTS
 create_table_queries = [staging_events_table_create, staging_songs_table_create, songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create]
