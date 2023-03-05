@@ -2,7 +2,7 @@
 
 This directory contains the cloud data warehouse project which is the second project of the Udacity Nanodegree in Data Engineering with AWS.
 
-The project demonstrates the understanding of using AWS services, such as S3, RedShift and EC2 to implement data warehouse infrastructure for the analytics use cases of a fictitious music streaming startup.
+The project demonstrates the understanding of using AWS services, such as S3, RedShift and EC2 to implement data warehouse infrastructure for the analytics use cases of a fictional music streaming startup.
 
 ## Schema Design
 
@@ -24,8 +24,12 @@ These table relationships are used in the ETL SQL queries provided to transform 
 
 The create scripts which include the `CREATE` and `DROP` queries, and the `INSERT` scripts, which include the `COPY` statement and the SQL to SQL ELT queries are all in the `sql_queries.py` file. 
 
-A section on analytics, aimed at providing descriptive information about the songs, users, and artists, is also provided. 
+A section on analytics, aimed at providing descriptive information about the songs, users, and artists, is also provided. The images attached below are the respective 
+responses from the analytics queries additionally provided.
 
+![](images/artists_stat.jpg)
+
+![](images/song_stat.jpg)
 
 ## How to run 
 
