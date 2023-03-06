@@ -26,3 +26,15 @@ LEFT JOIN staging_songs_table stsb ON (ste.song = stsb.title);
 
 
 (timestamp 'epoch' + ts * interval '1 second'), 'YYYY-MM-DD HH24:MI:SS')
+
+Note that there are many tools that you can use to make writing up README and Docstrings a breeze:
+
+Markdown editors: Markdown is a lightweight markup language that is commonly used to write documentation. Markdown editors, such as Typora or Visual Studio Code with the Markdown All in One extension, can help make it easier to write and format Markdown text.
+
+Pydoc: Pydoc is a built-in Python module that can generate documentation from Python docstrings. By adding docstrings to your Python code, you can use Pydoc to generate documentation in HTML or plain text format.
+
+Sphinx: Sphinx is a popular documentation generator that is commonly used to generate documentation for Python projects. It can be used to generate documentation from docstrings, as well as to create more detailed documentation that includes tables of contents, indices, and cross-referencing.
+
+Docstring generators: There are also several tools available that can help generate docstrings for your Python code, including Pydanny's "docstring" tool and Google's "pyment" tool. These tools can save time and ensure that your docstrings follow a consistent format.
+
+pipreqs --encoding=utf8 C:\Users\Admin\Documents\data-engineering\cloud-dw\redshift-etl-project

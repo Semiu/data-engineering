@@ -34,7 +34,7 @@ A section on analytics, aimed at providing descriptive information about the use
 
 ![](images/artists_stat.jpg)
 
-![](images/song_stat.jpg)
+![](images/songs_stat.jpg)
 
 ## How to run 
 
