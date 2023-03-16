@@ -50,8 +50,11 @@ stream and batch process while ingesting). This leads to new solution in the Lak
 
 Lakehouse architecture's core contribution is the addition of metadata and a governance layer on top of delta lake which is the ETL for any or all types of data (structured, semi-structured and unstructured). This gives a pool of raw data and curated set of data, into three data quality levels: Raw ingestion and history (Bronze), Filtered, cleaned, augmented (Silver), and business level aggregates (gold). This gold level can be supplied to streaming analytics, AI and reporting, and any other downstream usages.
 
+Data lakes in AWS
+Data lakes are naturally occurring data stores in an organization. This can be unstructured in texts, multimedia, etc., semi-structured, like CSV, JSON, and the structured, in RDBMS tables.
+The old time SFTP (secure file transfer protocol) serve is an example of data lakes. In AWS, S3 buckets are used for data lakes. Data lakes can be used as landing zone for unprocessed data, staging zone for semi-processed data, and rest zone, for processed data. Or as deemed fit. This is not a cut and dry rule in data movement categorization.
 
-
+Data lakes are technological response to data evolution. Just as HDFS came to solve the challenge of saving file that could not fit into a single storage service, S3 as the AWS service that supports the data lake phenomenon, helps in file storage systems with little cost involved.
 
 
 

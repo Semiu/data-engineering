@@ -1,0 +1,51 @@
+Using S3 buckets as data lakes to store data for Spark Jobs
+
+Using Spark on the AWS Cloud Platform is of different choices. 
+a. EMR - an AWS-managed Spark service of a scalable set of EC2 machines already configured to run Spark. You only configure the necessary cluster resources and do not need to manage the systems.
+
+b. EC2 instances to run Spark - The AWS elastic compute machines can be used to install and configure Spark and HDFS personally.
+
+c. AWS Glue Service to run Spark Jobs - A serverless Spark environment with added libraries like Glue context and Glue dynamic frames. Glue also interfaces with AWS data services, such as Data Catalog and AWS Athena.
+
+HDFS
+Spark uses HDFS as its distributed storage system (or S3, and any other one). Though Spark is better in processing than Hadoop, it lacks distributed storage system. Therefore, it lacks the system to organize, store and process data files.
+The HDFS uses the MapReduce system as a resource manager for distributing the files across the hard drives within the cluster. Like storing the data back on the hard drives after successful completion.
+
+On the other hand, Spark  runs the operations and holds the data in the RAM memory rather than the hard drives of HDFS. Because Spark lacks the file distribution system for organizing, storing and processing files, Spark tools are often installed on Hadoop so that Spark can use the HDFS resources.
+
+EMR cluster
+AWS EMR takes care of the manual installation of Spark and its dependencies on each machine. 
+The AWS EMR standalone mode means that you have the distributed resources and Spark takes care of the resource management.
+
+Intro to AWS Glue
+Recall from the intro to Spark, to RDDs, then the Spark SQL. The Spark SQLs rely on RDDs which also rely on Spark itself. In the same vein, Glue relies on Spark. With Glue Studio, one can write purely Spark scripts. There are additional features that can be added too
+
+The components you’ll need to set up and configure AWS Glue: (a) AWS S3 - the data lakes, (b) AWS VPC, (c) IAM Role.
+The IAM role allows the access and control of services between the AWS VPC and the AWS S3.
+
+The AWS VPC contains Glue jobs, Routing table, VPC gateways and S3 gateway point - in the dependency direction: 
+Glue jobs -> Routing table -> VPC gateways -> S3 gateway point -> AWS S3 
+
+Glue Jobs - Implementation code
+
+Routing table - an entity that stores the network paths to various locations. For example, it stores the path to S3 from within your VPC. A routing table will be needed to configure with your VPC gateway.
+
+VPC Gateway - Your cloud project runs resources within a Virtual Private Cloud. This implies that your Glue job runs in a secure zone without access to anything outside the virtual network. The VPC gateway is the network entity that gives access to the outside network and resources. S3 is a shared service that does not reside in your VPC. Therefore, an access gateway is required.
+
+S3 gateway point - The glue jobs can't reach the network outside the VPC because the S3 service runs in a separate network. The coming Glue jobs must access the S3 through the S3 gateway point. It allows the network path to reach the S3.
+
+AWS S3 - These are the buckets, the storage locations, within the AWS. They have a hierarchical directory-like structure. You can have different directories and sub-directories in the bucket.
+
+
+
+
+
+How to use Spark in Glue to process data with Glue Jobs
+How to create and run Glue Jobs.
+By the end of the lesson, you’ll be able to
+
+Identify properties of Data Lakes
+Load data to an S3 Landing Zone
+Create and run Spark Jobs using Glue Studio
+Create a Trusted Zone in S3 using Glue
+Read and write to Amazon S3
