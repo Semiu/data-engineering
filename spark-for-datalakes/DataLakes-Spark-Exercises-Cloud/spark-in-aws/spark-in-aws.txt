@@ -36,11 +36,13 @@ S3 gateway point - The glue jobs can't reach the network outside the VPC because
 
 AWS S3 - These are the buckets, the storage locations, within the AWS. They have a hierarchical directory-like structure. You can have different directories and sub-directories in the bucket.
 
-
-
-
-
 How to use Spark in Glue to process data with Glue Jobs
+Glue Studio provides a GUI for interacting with Glue to create Spark job with added capabilities. Glue jobs are created by writing and uploading python code.
+From the Glue Studio visual editor, we can select the source (data to be consumed in the pipeline. This can be S3, Glue table, RDB database, etc), transform (the transformation to be applied, e.g. missing values, JOIN, custom SQL, custom transform, etc), then target (same examples as the source).
+
+
+
+
 How to create and run Glue Jobs.
 By the end of the lesson, you’ll be able to
 
