@@ -21,8 +21,7 @@ The current development is lakehouse which is an amalgamation of a data lake (di
 parallel processing technology), and data analysis use cases (such as BI, Reports, Data Science, and Machine Learning). Lakehouse combines the strengths of both data lakes and data warehouses.
 
 Hadoop and MapReduce
-Hadoop ecosystem is attached to the boom of big data. Hadoop HDFS, MapReduce, YARN resource manager which schedules the computation resources for users are
-the components of the Hadoop ecosystem.
+Hadoop ecosystem is attached to the boom of big data. Hadoop HDFS, MapReduce, YARN resource manager which schedules the computation resources for users are the components of the Hadoop ecosystem.
 
 MapReduce is a programming technique for manipulating large data sets. It starts by dividing the large dataset for distribution across the data cluster.
 In map reduce, data is organized into (key, value) pairs. The shuffle step finds all of the data across the clusters that have the same key. 
@@ -56,10 +55,11 @@ The old time SFTP (secure file transfer protocol) serve is an example of data la
 
 Data lakes are technological response to data evolution. Just as HDFS came to solve the challenge of saving file that could not fit into a single storage service, S3 as the AWS service that supports the data lake phenomenon, helps in file storage systems with little cost involved.
 
+Data Privacy in Data Lakes
+These are hazards for privacy enforcement because many sources containing PII. Because these sources have wide open access, they should not be directly linked to analytics without proper treatment. The opt-in flags in customer records, for example, is a way to filter the customer record.
 
-
-
-
+Data Curation
+Preparing high quality data for others to use. Different zones are staged and made to be processed for to achieve high quality, filtered for privacy, composition from multiple sources.
 
 
 

@@ -41,13 +41,9 @@ Glue Studio provides a GUI for interacting with Glue to create Spark job with ad
 From the Glue Studio visual editor, we can select the source (data to be consumed in the pipeline. This can be S3, Glue table, RDB database, etc), transform (the transformation to be applied, e.g. missing values, JOIN, custom SQL, custom transform, etc), then target (same examples as the source).
 
 
+Differences between HDFS and AWS S3
+Since Spark does not have its own distributed storage system, it leverages HDFS or AWS S3, or any other distributed storage. Primarily in this course, we will be using AWS S3, but let’s review the advantages of using HDFS over AWS S3.
 
-
-How to create and run Glue Jobs.
-By the end of the lesson, you’ll be able to
-
-Identify properties of Data Lakes
-Load data to an S3 Landing Zone
-Create and run Spark Jobs using Glue Studio
-Create a Trusted Zone in S3 using Glue
-Read and write to Amazon S3
+AWS S3 is an object storage system that stores the data using key value pairs, and HDFS is an actual distributed file system that guarantees fault tolerance. HDFS achieves fault tolerance by duplicating the same files at 3 different nodes across the cluster by default (it can be configured to reduce or increase this duplication).
+HDFS has traditionally been installed in on-premise systems which had engineers on-site to maintain and troubleshoot the Hadoop Ecosystem, costing more than storing data in the cloud. Due to the flexibility of location and reduced cost of maintenance, cloud solutions have been more popular. With the extensive services AWS provides, S3 has been a more popular choice than HDFS.
+Since AWS S3 is a binary object store, it can store all kinds of formats, even images and videos. HDFS strictly requires a file format - the popular choices are avro and parquet, which have relatively high compression rates making it useful for storing large datasets.
