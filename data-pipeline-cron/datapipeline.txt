@@ -1,0 +1,29 @@
+Real-world examples:
+Automated marketing emails
+Real-time pricing in rideshare apps
+Targeted advertising based on browsing history
+
+The data pipeline, described in the code, is the series of steps in processing data. Some steps are sequential by design, and others can be parallel. 
+
+Intro
+
+Prerequisite knowledge
+
+Environment and tools
+
+Intro to Data Pipelines 
+Data pipelines can be represented as Directed Acyclic Graphs (DAGs) - a special subset of graphs in which the edges between the nodes have a specific direction, and no cycle exists. It means nodes can't create a path back to themselves. Nodes are steps in the data pipeline process. Edges are dependencies or relationships. 
+
+	Data validation - ensures the data is present, correct and meaningful. it is critical to ensure that data quality is ensured through automated validation checks while building data pipelines at any organization.
+
+	How Apache Airflow used DAGs - Airflow (an open source tool which structures data pipelines as DAGs) allows users to write DAGs in Python. It is a platform to programmatically author, schedule, and monitor workflows as DAGs.
+
+	How Airflow works - the airflow scheduler executes tasks on various workers  while following the specified dependencies. Rich command line utilities make performing complex surgeries on DAGs a snap. The rich user interface makes it easy to visualize pipelines running in production, monitor progress, and troubleshoot issues when needed. When workflows are defined as code, they become more maintainable, versionable, testable, and collaborative."
+Airflow consists of five (5) runtime components: web server, meta store db, scheduler, queue, and worker.
+Scheduler is for tracking the progress in DAGS. Orchestrating execution of jobs on a trigger or schedule.
+Work Queue holds the state of running DAGs and tasks.
+Work processes execute the operations defined in each DAGs.
+Metastore db stores credentials, connections, history and configuration
+	Schedule in Airflow
+	Operators and Tasks in Airflow - Callables and Decorators
+	Context and Templating in Airflow
