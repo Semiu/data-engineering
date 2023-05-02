@@ -15,7 +15,9 @@ def greet_flow_dag():
         logging.info("Hello World!")
 
     # hello_world represents a discrete invocation of the hello_world_task
+    # task is also called and passed to a variable
     hello_world=hello_world_task()
 
 # greet_dag represents the invocation of the greet_flow_dag
+# the dag must be called and passed to a variable
 greet_dag=greet_flow_dag()

@@ -26,4 +26,12 @@ Work processes execute the operations defined in each DAGs.
 Metastore db stores credentials, connections, history and configuration
 	Schedule in Airflow
 	Operators and Tasks in Airflow - Callables and Decorators
-	Context and Templating in Airflow
+
+Context and Templating in Airflow - Airflow leverages templating to allow users to fill in the blank with important runtime variables for tasks.
+
+Notably, Airflow does not process data in memory. Implying that you cannot pass data from one task to another task using DAG. The output must be written to an external data store. DAG is a collection of nodes and edges that describe the order of operations for a data pipeline. Task is an instatiated step in a pipeline fully parameterized for execution. Operator is an abstract building block that can be configured to perform some work.
+In Aiffloe DAGs, Nodes = Tasks, Edges = ordering and dependencies between tasks. Task dependencies can be described using >> and << or `set_upstream` and `set_upstream`.
+a >> b means a comes before b. b << a means b comes after a.
+a.set_upstream(b) means a comes after b. a.set_downstream(b) means a comes before b.
+
+Connection can be made via Airflow hooks. Hooks give reusable interface to external systems and databases. They take the responsibility of how and where to store your connection strings and secrets off your table. There are many hooks that Airflow can use for integrating into common systems. Examples are: HttpHook, PostgresHook, MysQlhook, etc.

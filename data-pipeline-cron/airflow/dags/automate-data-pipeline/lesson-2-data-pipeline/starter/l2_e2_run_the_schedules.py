@@ -7,6 +7,7 @@ from airflow.decorators import dag, task
 # TODO: Add a daily `schedule_interval` argument to the following DAG
 #
 @dag(
+    scheudle_interval = 'daily',
     start_date=pendulum.now()
 )
 def greet_flow():
