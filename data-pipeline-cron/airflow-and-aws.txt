@@ -1,0 +1,9 @@
+Connecting AWS and Airflow: This includes configuring (a)  AWS IAM, (b) AWS RedShift Serverless and (c) AWS S3. Then, connect (a) Airflow to AWS IAM credentials
+(b) Airflow to AWS RedShift Serverless, and (c) Airflow to S3. Then, query Redshift data using AWS console.
+
+Configuring Airflow through Windows Subsystem for Linux 
+$airflow db reset
+
+$airflow users  create --role Admin --username admin --email airflow@apache.com --firstname Airflow --lastname Admin --password admin
+
+$airflow webserver --port 8080
