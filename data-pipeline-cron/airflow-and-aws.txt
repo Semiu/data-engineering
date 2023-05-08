@@ -4,6 +4,8 @@ Connecting AWS and Airflow: This includes configuring (a)  AWS IAM, (b) AWS RedS
 Configuring Airflow through Windows Subsystem for Linux 
 $airflow db reset
 
+$airflow db init
+
 $airflow users  create --role Admin --username admin --email airflow@apache.com --firstname Airflow --lastname Admin --password admin
 
 $airflow webserver --port 8080

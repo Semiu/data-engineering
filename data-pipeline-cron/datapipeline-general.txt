@@ -34,4 +34,7 @@ In Aiffloe DAGs, Nodes = Tasks, Edges = ordering and dependencies between tasks.
 a >> b means a comes before b. b << a means b comes after a.
 a.set_upstream(b) means a comes after b. a.set_downstream(b) means a comes before b.
 
-Connection can be made via Airflow hooks. Hooks give reusable interface to external systems and databases. They take the responsibility of how and where to store your connection strings and secrets off your table. There are many hooks that Airflow can use for integrating into common systems. Examples are: HttpHook, PostgresHook, MysQlhook, etc.
+A connection can be made via Airflow hooks. Hooks give reusable interface to external systems and databases. They take the responsibility of how and where to store your connection strings and secrets off your table. There are many hooks that Airflow can use for integrating into common systems. Examples are: HttpHook, PostgresHook, MysQlhook, etc.
+
+Connecting AWS with Airflow requires configuring AWS IAM, AWS Redshift serverless, AWS S3, then connecting Airflow to AWS using the IAM credentials, connecting Airflow to AWS Redshift serverless and S3. Lastly, Redshift data can be queried using AWS console.
+
