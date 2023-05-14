@@ -16,6 +16,7 @@ from custom_operators.s3_to_redshift import S3ToRedshiftOperator
 from custom_operators.has_rows import HasRowsOperator
 
 
+
 from udacity.common import sql_statements
 
 @dag(    
