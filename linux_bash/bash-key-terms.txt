@@ -32,3 +32,9 @@ echo $MY_VAR
 alias ll="ls -l"
 # Use the alias 
 ll
+
+# bash command structure
+[cmd] [-option] [target]
+ls -al /tmp
+
+/usr/bin is the location from root where one can access all the commands and explore them for learning
