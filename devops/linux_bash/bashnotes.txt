@@ -1,0 +1,63 @@
+###### Piping ######
+Piping - Connecting the stdout of one command to the stdin of another command using the pipe | symbol.
+
+# List files and pipe to wc command
+ls -l | wc -l
+
+Redirection - Redirecting command output to a file instead of stdout using >.
+
+# Redirect output to file
+ls -l > output.txt
+
+Conditional Execution - Chain commands using && to execute next command only if first succeeds.
+
+ls file && echo "File exists"
+
+Append - Append output to a file instead of overwriting using >>.
+
+Control Characters - Modify command line with Ctrl+letter shortcuts like Ctrl+A start of line.
+
+Python Example
+
+Here is an example piping in Python using subprocess module:
+
+import subprocess
+# Call Bash pipeline and store result
+result = subprocess.run("ls -l | wc -l", shell=True, text=True, capture_output=True)  
+print(result.stdout)
+
+###### Shell Piping ######
+
+Shell piping - series of steps when you process data coming from an input, then sending the processed data to the output
+input -> process -> output
+For example: ls -h | wc -l > out.txt
+list directory, then count the items in the directory and write the value to a file out.txt
+
+The reading (https://github.com/noahgift/shell-pipes) covers core shell piping concepts like connecting commands for data processing, redirecting output to files, chaining execution, 
+appending to files, and using control characters for command editing. It provides a comprehensive set of examples demonstrating piping, conditional execution, text processing and file handling, 
+error suppression,  and leveraging command history.
+
+# Basic pipe usage
+ls -l /usr/bin | wc -l
+# Redirect output to file 
+ls -l > output.txt
+# Conditional execution
+[ -f file.txt ] && echo "File exists" 
+# Append output
+echo "Data" >> logfile.txt
+# Edit command  
+# Ctrl+A - Start of line
+# Ctrl+E - End of line
+
+Key Points
+
+Pipes connect stdout to stdin to combine commands
+
+Redirectors capture command output in files
+
+Conditional execution chains dependent commands
+
+Append mode adds to existing files
+
+Control characters enable command editing
+

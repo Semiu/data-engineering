@@ -38,30 +38,3 @@ ll
 ls -al /tmp
 
 /usr/bin is the location from root where one can access all the commands and explore them for learning
-
-Piping - Connecting the stdout of one command to the stdin of another command using the pipe | symbol.
-
-# List files and pipe to wc command
-ls -l | wc -l
-
-Redirection - Redirecting command output to a file instead of stdout using >.
-
-# Redirect output to file
-ls -l > output.txt
-
-Conditional Execution - Chain commands using && to execute next command only if first succeeds.
-
-ls file && echo "File exists"
-
-Append - Append output to a file instead of overwriting using >>.
-
-Control Characters - Modify command line with Ctrl+letter shortcuts like Ctrl+A start of line.
-
-Python Example
-
-Here is an example piping in Python using subprocess module:
-
-import subprocess
-# Call Bash pipeline and store result
-result = subprocess.run("ls -l | wc -l", shell=True, text=True, capture_output=True)  
-print(result.stdout)
