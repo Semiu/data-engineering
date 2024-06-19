@@ -61,3 +61,49 @@ Append mode adds to existing files
 
 Control characters enable command editing
 
+SSH (Secure Shell) - A protocol that allows secure communication between two systems over an unsecured network. It enables encrypted tunneling, remote command execution, and forwarding network ports.
+
+SSH Keys - A public/private key pair used to authenticate and securely communicate with remote systems using SSH without needing passwords.
+
+Git - A distributed version control system for tracking changes in source code and coordinating work on projects across multiple developers.
+
+GitHub - A cloud-based platform built around Git for hosting and collaborating on software development projects.
+
+Port Forwarding - A technique that allows redirecting incoming network connections from one port/IP on a machine to another port/IP. Useful for accessing services running on remote internal systems.
+
+Bash Code Examples
+
+The ssh-keygen command generates a public/private key pair that can be used for SSH authentication.
+
+The cat command prints out the public key file needed to add to GitHub for access.
+
+The git clone command clones a GitHub repo via SSH using the public/private keys.
+
+The ssh -L command forwards port 8080 on the remote host to local port 8080 for access.
+
+# Verbosely demonstrate piping, redirection, conditional execution
+# Print files in directory
+echo "Listing files..."
+ls -l 
+# Pipe files into line count
+echo "Piping to wc..." 
+ls -l | wc -l
+
+# Redirect output to file
+echo "Redirecting output..."
+ls > directory_listing.txt
+
+# Conditional file creation
+if [ -f key_file.txt ]; then
+    echo "File exists, creating new file..." 
+    touch new_file.txt
+fi
+
+# Generate public/private SSH key pair
+ssh-keygen -t rsa -b 4096 -C "myemail@example.com"  
+# Print the generated public key 
+cat ~/.ssh/id_rsa.pub
+# Clone a GitHub repo via SSH 
+git clone git@github.com:user/repo.git
+# Port forward remote port 8080 to local port 8080
+ssh -L 8080:localhost:8080 user@remotehost

@@ -14,5 +14,16 @@ wc -l append.txt
 echo "another thing" >> append.txt
 wc -l append.txt
 
-# Throw away stderr
+# Throw away stderr - (standard) output error won't be showing
 ls -l /wrong/path 2> /dev/null
+
+# Reading file parts
+tail -f tail -f /var/log/dpkg.log # keep file opening while working on it
+head -n 2 tail -f /var/log/dpkg.log # first two lines
+tail -n 2 tail -f /var/log/dpkg.log # last two lines
+
+# Using history
+history | less
+history | grep tail
+!1
+!! # to run previous command
