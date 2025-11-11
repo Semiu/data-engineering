@@ -2,9 +2,13 @@ Building maintainable and reusable pipelines in Airflow - The vibrant community 
 
 a. Focus on elevating your DAGs to reliable, production-quality data pipelines - 
 
-b. Extending airflow with custom plug-ins to create your hooks and operators: These community-contributed hooks and operators which every airflow user should first examine before writing a new one (if their need does not currently exist). This is in the airflow contrib, which can be located on the GitHub open source directory.Operators and hooks for common data tools like Apache Spark and Cassandra, as well as vendor-specific integrations for Amazon Web Services, Azure, and Google Cloud Platform can be found in Airflow contrib.
+b. Extending airflow with custom plug-ins to create your hooks and operators: These community-contributed hooks and operators which every airflow 
+user should first examine before writing a new one (if their need does not currently exist). This is in the airflow contrib, which can be located on the GitHub 
+open source directory.Operators and hooks for common data tools like Apache Spark and Cassandra, as well as vendor-specific integrations for Amazon Web Services, 
+Azure, and Google Cloud Platform can be found in Airflow contrib.
 
-Extending airflow using custom operators is typically by capturing frequently used operations into a reusable form. Plugins make DAGs simple and reusable to maintain.
+Extending airflow using custom operators is typically by capturing frequently used operations into a reusable form. 
+Plugins make DAGs simple and reusable to maintain.
 
 To create a custom operator, follow the steps:
 
@@ -25,7 +29,9 @@ Every task in your dag should perform only one job.
 “Write programs that do one thing and do it well.” - Ken Thompson’s Unix Philosophy.
 
 Benefits of Task Boundaries
-Re-visitable: Task boundaries are useful for you if you revisit a pipeline you wrote after a 6 month absence. You'll have a much easier time understanding how it works and the lineage of the data if the boundaries between tasks are clear and well defined. This is true in the code itself, and within the Airflow UI.
+Re-visitable: Task boundaries are useful for you if you revisit a pipeline you wrote after a 6 month absence. 
+You'll have a much easier time understanding how it works and the lineage of the data if the boundaries between tasks are clear and well defined. 
+This is true in the code itself, and within the Airflow UI.
 Tasks that do just one thing are often more easily parallelized. This parallelization can offer a significant speedup in the execution of our DAGs.
 
 d. subDAGs and how we can actually reuse DAGs themselves.
@@ -34,13 +40,22 @@ e. Monitoring in Airflow
 Airflow can surface metrics and emails to help you stay on top of pipeline issues.
 
 SLAs
-Airflow DAGs may optionally specify an SLA, or “Service Level Agreement”, which is defined as a time by which a DAG must complete. For time-sensitive applications these features are critical for developing trust amongst your pipeline customers and ensuring that data is delivered while it is still meaningful. Slipping SLAs can also be early indicators of performance problems, or a need to scale up the size of your Airflow cluster by adding workers
+Airflow DAGs may optionally specify an SLA, or “Service Level Agreement”, which is defined as a time by which a DAG must complete. 
+For time-sensitive applications these features are critical for developing trust amongst your pipeline customers and ensuring that data is delivered while 
+it is still meaningful. Slipping SLAs can also be early indicators of performance problems, or a need to scale up the size of your Airflow cluster by adding 
+workers
 
 Emails and Alerts
-Airflow can be configured to send emails on DAG and task state changes. These state changes may include successes, failures, or retries. Failure emails can allow you to easily trigger alerts. It is common for alerting systems like PagerDuty to accept emails as a source of alerts. If a mission-critical data pipeline fails, you will need to know as soon as possible to get online and get it fixed.
+Airflow can be configured to send emails on DAG and task state changes. These state changes may include successes, failures, or retries. 
+Failure emails can allow you to easily trigger alerts. It is common for alerting systems like PagerDuty to accept emails as a source of alerts. 
+If a mission-critical data pipeline fails, you will need to know as soon as possible to get online and get it fixed.
 
 Metrics
-Airflow comes out of the box with the ability to send system metrics using a metrics aggregator called statsd. Statsd can be coupled with metrics visualization tools like Grafana and monitoring tools like Prometheus to provide you and your team high level insights into the overall performance of your DAGs, jobs, and tasks. These systems can be integrated into your alerting system, such as pagerduty, so that you can ensure problems are dealt with immediately. These Airflow system-level metrics allow you and your team to stay ahead of issues before they even occur by watching long-term trends.
+Airflow comes out of the box with the ability to send system metrics using a metrics aggregator called statsd. Statsd can be coupled with 
+metrics visualization tools like Grafana and monitoring tools like Prometheus to provide you and your team high level insights into the overall performance 
+of your DAGs, jobs, and tasks. These systems can be integrated into your alerting system, such as pagerduty, so that you can ensure problems are dealt with 
+immediately. These Airflow system-level metrics allow you and your team to stay ahead of issues before they even occur by watching long-term trends.
 
 Logging
-By default, Airflow logs to the local file system. You probably sifted through logs so far to see what was going on with the scheduler. Logs can be forwarded using standard logging tools like fluentd.
+By default, Airflow logs to the local file system. You probably sifted through logs so far to see what was going on with the scheduler. 
+Logs can be forwarded using standard logging tools like fluentd.
